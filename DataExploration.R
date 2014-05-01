@@ -34,6 +34,8 @@ Palie.82 <- filter(raw.data.2, Island==2, Year==82, Transect %in% c(5,11))
 write.csv(Palie.82, file="Palie_82.csv", row.names=FALSE)
 
 ## ====== Graphs =======
+ggplot(coki.82, aes(x=Distance))+geom_histogram(binwidth=10)
+
 
 ggplot(coki.82, aes(x=Distance, fill=factor(Type)))+geom_dotplot(stackgroups=TRUE, binwidth=1, method="histodot")+ylim(0, 0.4)+xlim(0,200)
 # too hard to read
