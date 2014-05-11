@@ -58,36 +58,42 @@ ggplot()+geom_point(data=x.y, aes(X,Y))+geom_point(aes(x=stat.X, y=stat.Y), colo
 #   move 2km up or down. (decision?) (Left or right?)
 
 #     if outside bounds, go other way
+transect.shift <- 2 # number of kilometers between transects
 start.x <- NULL
 start.y <- NULL
 theta <- NULL
-case <- NULL  ## 1 = horizontal, 0 = vertical
+case.wall <- NULL  ## 1 = horizontal, 0 = vertical
+shift.down <- TRUE
 
 a <- if(rbinom(1,1,0.5)) 0.5 else 5.5
 b <- runif(1,0.5, 5.5)
 if(rbinom(1,1,0.5)) {
   start.x <- a
   start.y <- b
-  case <- 1
+  case.wall <- TRUE
   # case x is left or right wall
   if(start.x == 0.5){
     # case: left wall
     theta <- runif(1,-pi/2, pi/2)
+    shift.down <- FALSE
   } else {
     # case: right wall
     theta <- runif(1, pi/2, 3*pi/2)
+    shift.down <- TRUE
   }
 } else {
   start.x <- b
   start.y <- a
-  case = 0
+  case.wall = FALSE
   # Case, y is floor or ceiling
   if(start.y == 0.5){
     # case floor
     theta <- runif(1,0,pi)
+    shift.down <- FALSE
   } else {
     # case ceiling
     theta <- runif(1,pi,2*pi)
+    shift.down <- TRUE
   }
 }
 
@@ -133,6 +139,29 @@ transect.count <- 2
 # next transect.
 # if floor/ceiling, move x left/right
 # if wall, move y up/down
+temp.x <- temp.y <- 0
+
+## @TODO - If time, make the perpindicular distance between transects 2km, but right now, it's going to be 2km strictrly vertical or strictly horizontal
+d.change <- 2
+
+case.wall <- F  ## 1 = horizontal, 0 = vertical
+shift.down <- T
+
+# Case.wall = TRUE means x is 0.5 or 5.5. FALSE means Y is 0.5 or 5.5
+# shift.down = TRUE means x or y is 5.5. (can only move to smaller numbers) 
+#            = FALSE means x or y is 0.5 (can only move to bigger numbers)
+
+if(case.wall & shift.down){
+  temp.x <- start.x-d.change
+} else if(case.wall & !shift.down) {
+  temp.x <- start.x+d.change
+} else if(!case.wall & shift.down) {
+  temp.y <- start.y-d.change
+} else if(!case.wall & !shift.down){
+  temp.y <- start.y+d.change
+} else { print("boogers")}
+
+## this will run into issues where we're starting very close to the edge and can only fit 6 in, so we have 6 rows of 6.
 
 # are we in bounds? 
 # is the point a duplicate?
@@ -152,6 +181,86 @@ transect.count <- 2
 #     No: Make another transect.
 
 
+## ctrl-zed.
+
+#generate theta
+theta <- runif(1,0,pi)
+# generate 1 transect with 18 stations
+start.x <- 0
+start.y <- 0
+trans_id <- 1
+stat.temp <- data.frame(x=start.x, y=start.y, t_id=trans_id)
+
+last.x <- start.x
+last.y <- start.y
+for(i in 2:18){
+  next.x <- last.x+0.15*cos(theta)
+  next.y <- last.y+0.15*sin(theta)
+  stat.temp <- rbind(stat.temp, c(next.x, next.y, trans_id))
+  last.x <- next.x
+  last.y <- next.y
+}
+
+# get vertical distance that will put 2k between parallel lines
+delta <-0
+if(theta < (pi/2)){
+  delta <- pi/2 + theta
+} else if( theta > (pi/2)){
+  delta <- theta - pi/2
+} else { delta <- -1 }  # if theta is exactly pi/2 (not likely, but possible) need to know
+
+if(delta > 0 ){
+  #v.dist = 2/sin(delta)
+  last.x <- start.x + 2*cos(delta)
+  last.y <- start.y + 2*sin(delta)
+} else {
+  last.x <- start.x + 2
+  last.y <- start.y
+}
+
+# generate 2nd transect w/ 18 stations
+trans_id <- 2
+stat.temp <- rbind(stat.temp, c(last.x, last.y, trans_id))
+
+for(i in 2:18){
+  next.x <- last.x+0.15*cos(theta)
+  next.y <- last.y+0.15*sin(theta)
+  stat.temp <- rbind(stat.temp, c(next.x, next.y, trans_id))
+  last.x <- next.x
+  last.y <- next.y
+}
+
+## @TODO, modify code to generate variable #'s of transects/stations
+
+# if there was an angle in quadrant II, shit all x values to be > 0
+
+if(min(stat.temp$x) < 0 ){
+  stat.temp$x <- stat.temp[,1]+abs(min(stat.temp$x))
+}
+
+# get x,y dimensions
+x.range <- max(stat.temp[,1]) - min(stat.temp[,1])
+y.range <- max(stat.temp[,2]) - min(stat.temp[,2])
+
+
+
+# randomly place transect w/in 0.5,5.5grid.
+
+x.rng.max <- 5.5 - x.range
+y.rng.max <- 5.5 - y.range
+
+x.shift <- runif(1, 0.5, x.rng.max)
+y.shift <- runif(1, 0.5, y.rng.max)
+
+## adjust data frame
+x.tem = stat.temp$x + x.shift
+y.tem = stat.temp$y + y.shift
+
+stat.df <- data.frame(
+  stat.X = stat.temp$x + x.shift,
+  stat.Y = stat.temp$y + y.shift,
+  t_id = stat.temp$t_id
+  )
 
 
 
@@ -159,10 +268,15 @@ transect.count <- 2
 
 
 
+angle <- seq(-pi, pi, length=50)
+ell <- data.frame()
+for(i in 1:nrow(stat.df)) {
+  df <- data.frame(gp=i, a = sin(angle)*0.2+stat.df$stat.X[i], b = cos(angle)*0.2+stat.df$stat.Y[i])
+  ell <- rbind(ell, df)
+}
 
 
-
-
+ggplot()+geom_point(data=x.y, aes(X,Y))+geom_point(data=stat.df, aes(x=stat.X, y=stat.Y), color="#D55E00", inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour="#D55E00", size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))
 
 
 
