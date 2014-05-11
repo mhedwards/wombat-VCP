@@ -15,6 +15,9 @@ ggplot(x.y, aes(X, Y))+geom_point()+ geom_path(aes(a, b), data = df, inherit.aes
 stat.X <- rep(seq(0.5, 5.5,1),6)
 stat.Y <- sort(rep(seq(0.5, 5.5,1),6))
 
+stat.X <- runif(36, 0.5, 5.5)
+stat.Y <- runif(36, 0.5, 5.5)
+
 angle <- seq(-pi, pi, length=50)
 ell <- data.frame()
 for(i in 1:36) {
