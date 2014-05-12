@@ -8,7 +8,7 @@ library(dplyr)
 library(ggplot2)
 library(lubridate) # date/time manipulation
 
-raw.data <- tbl_df(read.csv("COKI.csv", stringsAsFactors=FALSE))
+raw.data <- tbl_df(read.csv("data/COKI.csv", stringsAsFactors=FALSE))
 
 ## ===== CODING ====
 
@@ -34,7 +34,13 @@ Palie.82 <- filter(raw.data.2, Island==2, Year==82, Transect %in% c(5,11))
 write.csv(Palie.82, file="Palie_82.csv", row.names=FALSE)
 
 ## ====== Graphs =======
-ggplot(coki.82, aes(x=Distance))+geom_histogram(binwidth=10)
+ggplot(coki.82, aes(x=Distance))+geom_histogram(binwidth=20, fill="white", colour="red")
+ggplot(coki.82, aes(x=Distance))+geom_histogram(aes(fill = ..count..), binwidth=20)+scale_fill_gradient("Count")+theme_bw(18)+scale_x_continuous(breaks=seq(0,700,100))+xlab("Observation Distance (m)")+ylab("# of Birds")
+
+ggsave("images/histogram_distance.pdf", width=8, height=4)
+
+
+sum(coki.82$Distance>500)/1673
 
 
 ggplot(coki.82, aes(x=Distance, fill=factor(Type)))+geom_dotplot(stackgroups=TRUE, binwidth=1, method="histodot")+ylim(0, 0.4)+xlim(0,200)
@@ -111,3 +117,9 @@ coki.82 %.%
 
 
 filter(by.Date.2, Date== as.POSIXct("1982-03-29", tz="UTC"))
+
+
+==============================
+  
+pts <- seq(0, 700, by=20)
+hist(coki.82$Distance, breaks=pts)

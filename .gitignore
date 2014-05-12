@@ -7,3 +7,8 @@
 # R data files from past sessions
 .Rdata
 .Rproj.user
+
+# Latex files
+*.aux
+*.log
+*.gz
