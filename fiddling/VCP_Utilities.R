@@ -24,7 +24,7 @@ get.Coords <- function(dens){
   cmin <- -0.5
   X <- runif(km2*dens, min=cmin, max=cmax)
   Y <- runif(km2*dens, min=cmin, max=cmax)
-  ret <- data.frame(X,Y)
+  ret <- data.frame(x=X,y=Y)
  # ret2 <- filter(ret, !((X < 0 | X > 6) | (Y < 0 | Y > 6)))
   return (ret)
 }

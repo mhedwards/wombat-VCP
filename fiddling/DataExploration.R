@@ -35,9 +35,10 @@ write.csv(Palie.82, file="Palie_82.csv", row.names=FALSE)
 
 ## ====== Graphs =======
 ggplot(coki.82, aes(x=Distance))+geom_histogram(binwidth=20, fill="white", colour="red")
-ggplot(coki.82, aes(x=Distance))+geom_histogram(aes(fill = ..count..), binwidth=20)+scale_fill_gradient("Count")+theme_bw(18)+scale_x_continuous(breaks=seq(0,700,100))+xlab("Observation Distance (m)")+ylab("# of Birds")
 
-ggsave("images/histogram_distance.pdf", width=8, height=4)
+ggplot(coki.82, aes(x=Distance))+geom_histogram(aes(fill = ..count..), binwidth=5)+scale_fill_gradient("Count")+theme_bw(18)+scale_x_continuous(breaks=seq(0,700,100))+xlab("Observation Distance (m)")+ylab("# of Birds")
+
+ggsave("images/histogram_distance5.pdf", width=8, height=4)
 
 
 sum(coki.82$Distance>500)/1673
