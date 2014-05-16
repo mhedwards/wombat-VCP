@@ -4,10 +4,12 @@
 ## Generates a structured layout
 #   hardcoded (yes, bad) for my partiular set up.
 #   returns a data frame with columns x and y
-VCP.structuredLayout <- function() {
+VCP.structuredLayout <- function(n=36) {
   stat.X <- rep(seq(0.5, 5.5,1),6)
   stat.Y <- sort(rep(seq(0.5, 5.5,1),6))
-  stations <- data.frame(x=stat.X, y=stat.Y)
+  s_id <- seq(1,n)
+  t_id <- rep(1,n)
+  stations <- data.frame(x=stat.X, y=stat.Y, s_id=s_id, t_id=t_id)
   return(stations)
 }
 
@@ -18,7 +20,9 @@ VCP.structuredLayout <- function() {
 VCP.randomLayout <- function(n=36, min=0.5, max=5.5){
   stat.X <- runif(n, min, max)
   stat.Y <- runif(n, min, max)
-  stations <- data.frame(x=stat.X, y=stat.Y)
+  s_id <- seq(1,n)
+  t_id <- rep(1,n)
+  stations <- data.frame(x=stat.X, y=stat.Y, s_id=s_id, t_id=t_id)
   return(stations)
 }
 
@@ -26,7 +30,7 @@ VCP.randomLayout <- function(n=36, min=0.5, max=5.5){
 ## Generates a random-systematic layout with 2 transects and a 0.15 (150 m) distance between stations, and 2km distance between transects
 #   returns a data frame with columns x, y and t_id for transect ID.
 #   hardcoded (still bad) for my partiular set up.
-VCP.randSystematicLayout <- function() {
+VCP.randSystematicLayout <- function(n=36) {
   
   #generate random angle theta from 0 to pi (Quadrants I, & II)
   theta <- runif(1,0,pi)
@@ -101,9 +105,11 @@ VCP.randSystematicLayout <- function() {
   x.tem = stat.temp$x + x.shift
   y.tem = stat.temp$y + y.shift
   
+  s_id = seq(1,n)
   stat.df <- data.frame(
     x = stat.temp$x + x.shift,
     y = stat.temp$y + y.shift,
+    s_id = s_id,
     t_id = stat.temp$t_id
   )
   

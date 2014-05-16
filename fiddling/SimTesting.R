@@ -45,6 +45,8 @@ for(i in 1:nsim){
 
 VCP.dHat <- function(xy.objects, xy.vcp, params, g.type="hnorm", transects=FALSE){
   n.vcp <- nrow(xy.vcp)
+  m <- rep(0, n.vcp)
+  R.j <- data.frame()
   
   # for each point (transect)
   for(i in 1:n.vcp){
@@ -74,7 +76,26 @@ VCP.dHat <- function(xy.objects, xy.vcp, params, g.type="hnorm", transects=FALSE
     }
     
     # store list of detected R.j in data frame, with station # and transect # if applicable
-    
+    m[i] <- sum(detected)
+    R.j <- rbind(R.j, filter(candidate.xy, detected==1)$R.j)
   }
   
+}
+
+
+## needs a vector m, that is the length of the # of VCPS, and a vector R.j that is all the detected distances.
+
+
+VCP.Dhat.hnormKernel <- function(m, R.j) {
+  #VCP density from Quang, 1993
+  m.bar <- mean(m) # mean # of objects per plot.
+  n.hat <- sum(m) #sum of objects surveyed
+  h <- sd(R.j)*n.hat^(-1/5)
+  t <- length(m)
+  #D.hat.2 <- (1/(sqrt(2*pi)*pi*(h^3)*t)) * sum(R.j*exp(-((R.j)^2)/(2*h^2)    ))
+  # Quang provides two methods, the previous line should return same value as following sequence.
+  K <- sqrt(2 * pi)^(-1) * (exp((-0.5) * (R.j/h)^2) * ((-0.5) * (2 * (R.j/h))))
+  B.hat = (-2/(n.hat*h^2))*sum(K)
+  D.hat = (m.bar*B.hat)/(2*pi)
+  return(D.hat)  
 }
