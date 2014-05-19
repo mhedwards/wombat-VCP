@@ -20,7 +20,7 @@
   \large Matt Edwards\\
   11 May 2014\par
 \endgroup
-\texttt{NOTE TO FIX: I've been using POint Transect and VCP interchangably, Buckland makes a distinction (2004, pg 6) that Point Transect you only survey the area immediately around the point, where as VCP, you are censusing $\pi w^2$. However, in the 2006 paper, he refers to them interchangably.}
+\texttt{NOTE TO (maybe) FIX: I've been using POint Transect and VCP interchangeably, Buckland makes a distinction (2004, pg 6) that Point Transect you only survey the area immediately around the point, where as VCP, you are censusing $\pi w^2$. However, in the 2006 paper, he refers to them interchangeably.}
 \section{Introduction}
 Transects, both point and line, are a method of population density estimation often used in the ecological sciences. They are useful when populations are too small to be seen from the air (birds, rodents) or may be masked by the canopy (ground plants.) Recent studies that use distance sampling include Norwegian bird populations (Pedersen et al. 2012), Komodo dragon prey estimates (Ariefiandy et al. 2013), Serengeti carnivore abundance (Durant et al. 2011), and estimates for butterfly populations (Isaac et al. 2011). A study by Cox et al. extends point transect sampling for use with underwater acoustics for estimates of krill populations (2011), and a study by Rowcliffe et al. combines distance sampling with camera traps to estimate populations (2011). 
 
@@ -239,5 +239,40 @@ Following the scaling of the highest point to 1, as was done with the half norma
 $\delta_{EMP}=\frac{1}{max(predicted)}=40.5780$ 
 
 \texttt{I know I read about how to deal with the random-systematic method, but now, of course, can't find it. With Line transect sampling, they essentially treat the data as if it came from one long transect, so that's what I'm going to do until I can find another reference.}
+
+\section{Results}
+\subsection{Half-normal vs. Empirical $g(x)$}
+\begin{figure}
+
+	\includegraphics[width=\textwidth]{../images/Emp_Vs_Hnorm.pdf}
+	\caption{1000 Simulations, Empirical vs Half-normal Detection function, for three different layouts. \label{fig:sim1}}
+		
+\end{figure}
+Figure \ref{fig:sim1} shows the results of 1000 simulations, each analyzed with Empirical and Half-normal detection function, $g(x)$, and using each of the three layouts, Structured, Random, and Transect. All $\hat{D}$  were done using the kernel method with a normal kernel (Quang 1993).
+
+For each simulation, a single layout of ``objects'' is generated, and that map is analyzed by each of the 6 combinations of VCP layout and $g(x)$. 
+
+As we would expect, the density estimates using $g(x)$ based on the Empirical distance observations is biased low. We also see bias in the estimates using the half-normal function for $g(x)$, but it is much less severe than in the Empirical data.
+
+Addressing our primary question of interest, does the overlap of the VCP affect the population density estimate due to violation of independence, the answer would appear to be no. Looking at the simulations with the Half-normal detection function, the histograms are fairly similar for the three layouts. 
+
+\begin{table}
+	\caption{Empirical vs. Half-normal detection function, across all three layouts. 1000 simulations.}
+	\begin{tabular}{ r r r r r r r r r}
+	   $g(x)$	 & Layout		& Mean	& Std Dev	& LB 95 & UB 95	& 25th	& Median	&  75th \\ \hline \hline
+	   Empirical & Random		& 14.52 & 3.35 		& 7.97	& 21.08	& 12.17	& 14.46	& 16.74\\
+	   Empirical & Structured	& 14.50 & 3.22 		& 8.19 	& 20.81 & 12.38 & 14.45 & 16.62\\
+	   Empirical & Transect		& 14.46 & 3.53 		& 7.55 	& 21.37 & 11.85 & 14.36 & 16.88\\ \hline
+	 Half-normal & Random 		& 18.17 & 4.50 		& 9.34 	& 27.00 & 15.24 & 17.94 & 21.00\\
+	 Half-normal & Structured	& 17.94 & 4.29 		& 9.54 	& 26.35 & 15.19 & 17.67 & 20.78\\
+	 Half-normal & Transect		& 18.04 & 4.49 		& 9.23 	& 26.84 & 14.90 & 17.75 & 20.74\\
+
+	\end{tabular}
+	\label{table:sim1}
+\end{table}
+
+
+
+\texttt{TO DO: along with d.hat, get the variance estimate for d.hat, and return T/F if the true value was contained in the interval.}
 
 \end{document}
