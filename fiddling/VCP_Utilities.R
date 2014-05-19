@@ -1,6 +1,21 @@
 ## Utility
 library(dplyr)
 
+get.Coords <- function(dens){
+  # hard coding for 36km^2, with a 0.5 buffer on either side, then trimming.
+  #  km2 <- ha_to_km2(ha)
+  #  cmax <- sqrt(km2)
+  km2 <- 49
+  cmax <- 6.5
+  cmin <- -0.5
+  X <- runif(km2*dens, min=cmin, max=cmax)
+  Y <- runif(km2*dens, min=cmin, max=cmax)
+  ret <- data.frame(x=X,y=Y)
+  # ret2 <- filter(ret, !((X < 0 | X > 6) | (Y < 0 | Y > 6)))
+  return (ret)
+}
+
+
 ha_to_km2 <- function(ha){
   return (ha/100)
 }
@@ -15,19 +30,6 @@ n.toSim <- function(ha, dens) {
   return (km2*dens)  # if we have 9 square kilometers, we want approx "density" # of birds per km2
 }
 
-get.Coords <- function(dens){
-  # hard coding for 36km^2, with a 0.5 buffer on either side, then trimming.
-#  km2 <- ha_to_km2(ha)
-#  cmax <- sqrt(km2)
-  km2 <- 49
-  cmax <- 6.5
-  cmin <- -0.5
-  X <- runif(km2*dens, min=cmin, max=cmax)
-  Y <- runif(km2*dens, min=cmin, max=cmax)
-  ret <- data.frame(x=X,y=Y)
- # ret2 <- filter(ret, !((X < 0 | X > 6) | (Y < 0 | Y > 6)))
-  return (ret)
-}
 
 is.in.bounds <- function(x,y, xmin=0.5, xmax=5.5, ymin=0.5, ymax=5.5) {
   ok <- TRUE

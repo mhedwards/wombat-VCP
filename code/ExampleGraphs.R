@@ -178,3 +178,7 @@ m.500 <- predict(by5.lo, 500)
 delta.RS*m.500
 
 
+hnorm.p <- VCP.defineHalfnorm(.5)
+th.x=seq(0,.6,length=100)
+th.y=dhalfnorm(th.x, hnorm.p$theta)*hnorm.p$delta
+plot(x=th.x, y=th.y, type="l")

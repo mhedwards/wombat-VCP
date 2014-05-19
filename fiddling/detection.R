@@ -175,6 +175,15 @@ VCP.defineLoess <- function(distances, breakpoints){
 # RETURN: a vector of yes/no if the point was detected at that distance.
 VCP.loessProb <- function(distances, params ){
   pi.raw <- predict(params$dist.lo, distances)*params$delta
+  
+  # the Loess prediction returns NA for observations beyond the scope of the original data
+  # turn them into 0 probability, so the detected function doesn't choke.
+  
+  na.idx <- which(pi.raw %in% NA)
+  for(i in 1:length(na.idx)){
+    pi.raw[na.idx[i]] <- 0
+  }
+  
   detected <- VCP.detected(pi.raw)
   return(detected)  
 }
