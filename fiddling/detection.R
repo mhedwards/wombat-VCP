@@ -149,6 +149,7 @@ sum(th.y2, na.rm=T) # 0.992455
 
 
 ### ------------------- FUNCTIONS -------------------------
+# Already in VCP Functions
 
 # INPUT: A vector of distance values, and a vector of equally spaced breakpoints
 # RETURN: delta for Loess, and the Loess object for use with prediction

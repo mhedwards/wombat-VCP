@@ -3,9 +3,9 @@ library(dplyr)
 library(fdrtool) # for halfnormal which you need for project_functions
 
 # set up environment
-D.known <- 20
+D.known <- 50
 max.r <- 0.5
-nsim <- 1000
+nsim <- 100
 
 # half normal parameters for g(r)
 hn.params <- VCP.defineHalfnorm(max.r)
@@ -58,7 +58,7 @@ for(i in 1:nsim){
 }
 
 
-write.csv(D.hat.df, "data/Sim1_05-18.csv", row.names=FALSE)
+#write.csv(D.hat.df, "data/Sim1_05-18.csv", row.names=FALSE)
 
 close(pb)
 
@@ -107,15 +107,15 @@ hist(D.hat.df$D.emp.S)
 ### set up for manual looping----
 xy.objects <- x.y
 xy.vcp <- xy.structured
-params <- emp.params
-g.type= "emp"
+params <- hn.params
+g.type= "hnorm"
 i <- 1
 w <- max.r
 ####
 
 ## g.type can be "hnorm" or "emp"; it defaults to "hnorm" if an unrecognized value entered
 
-VCP.dHat <- function(xy.objects, xy.vcp, params, w=0.5, g.type="hnorm", transects=FALSE){
+VCP.dHat <- function(xy.objects, xy.vcp, params, w=0.5, g.type="hnorm", transects=FALSE, true.D){
   n.vcp <- nrow(xy.vcp)
   m <- rep(0, n.vcp)
   R.j <- data.frame()
@@ -187,16 +187,73 @@ ggplot()+geom_point(data=xy.objects, aes(x,y))+geom_point(aes(x=stat.X, y=stat.Y
 ## needs a vector m, that is the length of the # of VCPS, and a vector R.j that is all the detected distances.
 
 
-VCP.Dhat.hnormKernel <- function(m, R.j) {
+## ------ Testing for Bias --------
+# this uses data from a density = 50 simulation
+R.i <- R.j$R.j
+
+VCP.Dhat.hnormKernel(m, R.j$R.j)  #52.14975
+
+## - buckland p 160
+sigma.hat.2 <- sum( (R.i^2)/(2*sum(m)))
+h.hat <- 1/sigma.hat.2
+
+D.hat <- (sum(m)*h.hat)/(2*pi*length(m)) # 58.0839
+# That is higher
+
+## lets truncate
+
+Observed <- R.j %.% filter(R.j <= .2)
+m.n <- Observed %.% group_by(s_id) %.% summarise(n=n())
+
+which(!seq(1:36) %in% m.n$s_id)
+
+m.full <- rbind(m.n, c(9,0), c(17,0))
+
+
+#truncated distances with truncated M (didn't count points w/ 0)
+VCP.Dhat.hnormKernel(m.n$n, Observed$R.j) # 62.80378
+
+# truncated distances with full m (counted points w/ 0 obs)
+VCP.Dhat.hnormKernel(m.full$n, Observed$R.j) # 59.3147
+
+## All of these choices are awful.
+
+VCP.Dhat.hnormKernel <- function(m, R.i) {
   #VCP density from Quang, 1993
   m.bar <- mean(m) # mean # of objects per plot.
   n.hat <- sum(m) #sum of objects surveyed
-  h <- sd(R.j)*n.hat^(-1/5)
+  h <- sd(R.i)*n.hat^(-1/5)
   t <- length(m)
-  #D.hat.2 <- (1/(sqrt(2*pi)*pi*(h^3)*t)) * sum(R.j*exp(-((R.j)^2)/(2*h^2)    ))
+  #D.hat.2 <- (1/(sqrt(2*pi)*pi*(h^3)*t)) * sum(R.i*exp(-((R.i)^2)/(2*h^2)    ))
   # Quang provides two methods, the previous line should return same value as following sequence.
-  K <- sqrt(2 * pi)^(-1) * (exp((-0.5) * (R.j/h)^2) * ((-0.5) * (2 * (R.j/h))))
-  B.hat = (-2/(n.hat*h^2))*sum(K)
+  K.prime <- sqrt(2 * pi)^(-1) * (exp((-0.5) * (R.i/h)^2) * ((-0.5) * (2 * (R.i/h))))
+  B.hat = (-2/(n.hat*h^2))*sum(K.prime)
   D.hat = (m.bar*B.hat)/(2*pi)
   return(D.hat)  
 }
+
+K.2h <- sqrt(2 * pi)^(-1) * (exp((-0.5) * (R.i/(2*h))^2) * ((-0.5) * (2 * (R.i/2*h)))) #triple check this
+B.hat.2h <- -(1/(2*n.hat*h^2))*sum(K.2h)
+B.star <- (4/3)*B.hat-(1/3)*B.hat.2h
+D.hat.star <- (m.bar*B.star)/(2*pi) ##69.52 compared to 52.15. Shouldn't this make it better? not worse?
+
+Kern <- D(expression(exp(-r^2/2)/(sqrt(2*pi))), "r")
+D(x, "x")
+Kern
+Kern(1)
+?eval
+
+eval(Kern, R.j$R.j)
+r <- R.j$R.j/h
+eval(Kern)
+
+(-2/(n.hat*h^2))*sum(eval(Kern))
+Kern
+sum(K)
+sum(eval(Kern))
+
+r <- R.j$R.j/(2*h)
+
+
+B.star <- (4/3)*B.hat-(1/3)*(-1/(2*n.hat*h^2))*sum(eval(Kern))
+D.hat.star <- (m.bar*B.star)/(2*pi) # 55.13 FIxed issue, still worse.

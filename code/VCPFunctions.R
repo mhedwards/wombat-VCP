@@ -42,6 +42,13 @@ VCP.defineLoess <- function(distances, breakpoints){
 # RETURN: a vector of yes/no if the point was detected at that distance.
 VCP.loessProb <- function(distances, params ){
   pi.raw <- predict(params$dist.lo, distances)*params$delta
+  
+  # using the Empirical data, distances beyond .69 will have a probability of "NA". Need to set these to 0.
+  idx <- which(pi.raw %in% NA)
+  for(i in 1:length(idx)){
+    pi.raw[idx[i]] <- 0
+  }
+  
   detected <- VCP.detected(pi.raw)
   return(detected)  
 }
