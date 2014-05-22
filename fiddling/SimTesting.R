@@ -104,12 +104,12 @@ median(D.hat.df$D.emp.T)
 
 hist(D.hat.df$D.emp.S)
 
-### set up for manual looping----
+### set up for manual looping------------------
 xy.objects <- x.y
 xy.vcp <- xy.structured
 params <- hn.params
 g.type= "hnorm"
-i <- 1
+i <- 12
 w <- max.r
 ####
 
