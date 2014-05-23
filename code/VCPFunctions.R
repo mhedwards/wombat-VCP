@@ -64,6 +64,10 @@ VCP.hnormProb <- function(distances, params){
   return(detected)  
 }
 
+VCP.dhnorm <- function(r, params){
+  return(dhalfnorm(r, params$theta)*params$delta)
+}
+
 # returns the parameters for a half normal probability
 ## INPUT:
 #  w: the radius of detectability, beyond which detectability is essentially 0
