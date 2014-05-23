@@ -33,7 +33,7 @@ for(i in 1:nsim){
   
   # get random VCP coords
   xy.random <- VCP.randomLayout()
-  xy.transect <- VCP.randSystematicLayout()
+  xy.transect <- VCP.transectLayout()
   
   # for each VCP layout
   #   for each detection function

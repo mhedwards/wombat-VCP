@@ -1,6 +1,7 @@
 #### Matt's VCP Utilitles Package
 
 library(dplyr)
+library(fdrtool) # for half normal distribution
 
 get.Coords <- function(dens){
   # hard coding for 36km^2, with a 0.5 buffer on either side, then trimming.

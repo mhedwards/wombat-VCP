@@ -30,7 +30,7 @@ VCP.randomLayout <- function(n=36, min=0.5, max=5.5){
 ## Generates a random-systematic layout with 2 transects and a 0.15 (150 m) distance between stations, and 2km distance between transects
 #   returns a data frame with columns x, y and t_id for transect ID.
 #   hardcoded (still bad) for my partiular set up.
-VCP.randSystematicLayout <- function(n=36) {
+VCP.transectLayout <- function(n=36) {
   
   #generate random angle theta from 0 to pi (Quadrants I, & II)
   theta <- runif(1,0,pi)

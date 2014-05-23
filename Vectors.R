@@ -110,3 +110,135 @@ n.theta <- acos( (x1-X)/h) ## this equals theta
 
 
 (y1-Y)/(x1-X)
+
+### ------ Compare Movement Detection Distances with Lack of Movement -----------------
+
+nsim <- 50
+hnorm.p <- VCP.defineHalfnorm(.5)
+
+# get VCP points
+xy.S <- VCP.structuredLayout()
+#xy.R <- VCP.randomLayout()
+#xy.T <- VCP.transectLayout()
+
+Rj.still <- data.frame()
+Rj.move <- data.frame()
+xy.vcp <- xy.S
+w <- 0.5 # max detection distance.
+
+# cycle through points, do the regular detection thing
+for(i in 1:nsim){
+  xy.objects <- get.Coords(20)
+  
+  for(j in 1:36){
+    # get next x, y 
+    curr.x <- xy.vcp[j,"x"]
+    curr.y <- xy.vcp[j,"y"]
+    # consider objects within x+/- w and y+/- w
+    #   (not considering "noise" for this sim)
+    
+    xmin = curr.x-w
+    xmax = curr.x+w
+    ymin = curr.y-w
+    ymax = curr.y+w
+    
+    candidate.xy <- filter(xy.objects, (xmin <= x & x <= xmax) & (ymin <= y & y <= ymax))
+    
+    # calculate straight-line distance from observer to object, R.j
+    
+    candidate.xy <- mutate(candidate.xy, x.dist = x-curr.x, y.dist=y-curr.y, R.j = sqrt(x.dist^2+y.dist^2))
+    
+    # feed R.j into detection function
+
+    detected.still <- VCP.hnormProb(candidate.xy$R.j, hnorm.p)
+  
+    # add movement, see if detected (using h-norm detection)
+    movement <- VCP.movement(candidate.xy$R.j)
+    detected.move <- VCP.hnormProb(candidate.xy$R.j + movement, hnorm.p)
+    
+    candidate.xy <- candidate.xy %.% mutate(new.RJ = R.j + movement)
+    
+    # store list of detected R.j in data frame, with station # and transect # if applicable
+    Rj.still <- rbind(Rj.still, candidate.xy %.% filter(detected.still==1) %.% mutate(Rj = R.j))
+    Rj.move  <- rbind(Rj.move, candidate.xy %.% filter(detected.move==1) %.% mutate(Rj=new.RJ))
+  }
+  
+  
+
+}
+
+
+ddist.mov <- Rj.move$Rj
+ddist.still <- Rj.still$Rj
+
+hist(ddist.mov)
+hist(ddist.still)
+
+# the hell? the "still" distances also have a drop close to the point
+
+xy.vcp <- VCP.transectLayout()
+raw.Rj <- data.frame()
+xy.objects <- get.Coords(20)
+
+for(j in 1:36){
+  # get next x, y 
+  curr.x <- xy.vcp[j,"x"]
+  curr.y <- xy.vcp[j,"y"]
+  # consider objects within x+/- w and y+/- w
+  #   (not considering "noise" for this sim)
+  
+  xmin = curr.x-w
+  xmax = curr.x+w
+  ymin = curr.y-w
+  ymax = curr.y+w
+  
+  candidate.xy <- filter(xy.objects, (xmin <= x & x <= xmax) & (ymin <= y & y <= ymax))
+  
+  # calculate straight-line distance from observer to object, R.j
+  
+  candidate.xy <- mutate(candidate.xy, x.dist = x-curr.x, y.dist=y-curr.y, R.j = sqrt(x.dist^2+y.dist^2))
+  
+  raw.Rj <- rbind(raw.Rj, candidate.xy)
+}
+
+dist.raw <- raw.Rj$R.j
+hist(dist.raw)
+
+# so, at least with this map, we're dealing with most of the points are not within .1 to .2 of the thing
+# both with structured
+dist.raw1 <- dist.raw
+dist.raw2 <- dist.raw
+
+#We see the same patterns with random layout & transect layout. 
+
+
+pi*.1^2
+#Area: 0.0314 km2
+20*pi*.1^2
+# # of birds: .628
+
+pi*.2^2
+#Area: 0.1256
+20*pi*.2^2
+# # of birds: 2.513
+
+pi*.5^2 
+#area: .7853982
+20*pi*.5^2 
+#birds: 15 birds
+
+
+pi*.1^2
+#Area: 0.0314 km2
+20*pi*.1^2
+# # of birds: .628
+
+pi*.5^2  - pi*.4^2
+# area: .283 km2
+20*(pi*.5^2  - pi*.4^2)
+# birds: 5.6548
+
+
+## so, we are, at distances beyond .3, seeing the effect of the deteciton curve in teh drop off of detection.
+# # the movement is dropping the frequency closer to 0 and bumping it up closer to .1
+
