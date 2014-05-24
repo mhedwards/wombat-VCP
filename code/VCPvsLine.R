@@ -57,4 +57,4 @@ ggsave("images/rect-circ-detection.pdf", width=6, height=6)
 
 # what this says to me is that even with the best case scenario, original observation distance, accurate, detection exactly follows the half-normal curve , you will not see teh "shoulder" in the emperical 
 
-# because of the way the area of a circle works, if we did see a shoulder in emperical data from VCP
+# because of the way the area of a circle works, if we did see a shoulder in emperical data from VCP, something would be wrong

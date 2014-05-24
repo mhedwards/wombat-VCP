@@ -1,6 +1,19 @@
 ## Station Generation Code
 
 
+get.Coords <- function(dens){
+  # hard coding for 36km^2, with a 0.5 buffer on either side, then trimming.
+  km2 <- 49
+  cmax <- 6.5
+  cmin <- -0.5
+  X <- runif(km2*dens, min=cmin, max=cmax)
+  Y <- runif(km2*dens, min=cmin, max=cmax)
+  idx <- seq(1:length(X))
+  ret <- data.frame(x=X,y=Y,o_id=idx)
+  # ret2 <- filter(ret, !((X < 0 | X > 6) | (Y < 0 | Y > 6)))
+  return (ret)
+}
+
 ## Generates a structured layout
 #   hardcoded (yes, bad) for my partiular set up.
 #   returns a data frame with columns x and y

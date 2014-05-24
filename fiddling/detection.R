@@ -3,6 +3,8 @@
 library(dplyr)
 library(fdrtool) # for halfnormal which you need for project_functions
 
+## -- FUNCTIONS ARE IN VCPFUNCTIONS
+
 ## test data
 x.y <- get.Coords(20)
 w <- .500 # how will the function get this?

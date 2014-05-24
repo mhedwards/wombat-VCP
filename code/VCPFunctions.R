@@ -3,20 +3,6 @@
 library(dplyr)
 library(fdrtool) # for half normal distribution
 
-get.Coords <- function(dens){
-  # hard coding for 36km^2, with a 0.5 buffer on either side, then trimming.
-  #  km2 <- ha_to_km2(ha)
-  #  cmax <- sqrt(km2)
-  km2 <- 49
-  cmax <- 6.5
-  cmin <- -0.5
-  X <- runif(km2*dens, min=cmin, max=cmax)
-  Y <- runif(km2*dens, min=cmin, max=cmax)
-  ret <- data.frame(x=X,y=Y)
-  # ret2 <- filter(ret, !((X < 0 | X > 6) | (Y < 0 | Y > 6)))
-  return (ret)
-}
-
 
 # INPUT: A vector of distance values, and a vector of equally spaced breakpoints
 # RETURN: delta for Loess, and the Loess object for use with prediction

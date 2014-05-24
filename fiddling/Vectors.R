@@ -1,5 +1,9 @@
 ## mainly notes to me about vector.
 
+## 5/24 - functions copied into Code folder
+# may be some useful things here confirming that the movement code works.
+
+
 From C and x change can get angle.
 
 From angle and new C can get x and y changes.
