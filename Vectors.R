@@ -170,9 +170,9 @@ for(i in 1:nsim){
 
 ddist.mov <- Rj.move$Rj
 ddist.still <- Rj.still$Rj
-
-hist(ddist.mov)
-hist(ddist.still)
+brks <- seq(0,.62, by=.02)
+hist(ddist.mov, breaks=brks)
+hist(ddist.still, breaks=brks)
 
 # the hell? the "still" distances also have a drop close to the point
 
@@ -203,6 +203,10 @@ for(j in 1:36){
 
 dist.raw <- raw.Rj$R.j
 hist(dist.raw)
+
+ggplot()+geom_histogram(aes(x=dist.raw), fill="white", colour="black")+theme_bw(18)+xlab("Distance from Observer")+ylab("Number of Birds")
+
+ggsave("images/simulated_bird_distances.pdf", width=8, height=8)
 
 # so, at least with this map, we're dealing with most of the points are not within .1 to .2 of the thing
 # both with structured

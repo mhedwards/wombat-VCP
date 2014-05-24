@@ -275,4 +275,47 @@ Addressing our primary question of interest, does the overlap of the VCP affect 
 
 \texttt{TO DO: along with d.hat, get the variance estimate for d.hat, and return T/F if the true value was contained in the interval.}
 
+\texttt{TO DO: look at 3 moved categories for the 3 layouts}
+
+\section{The Problem with Circles}
+To test the effectiveness of my movement algorithm, I compared the detection distances from the data where the objects moved, to the detection distances from the same data, assuming they stayed still. The movement data, (left panel, Figure \#) is squashed more towards 0.1 Km than the still data (right panel). But there's a problem. The still data doesn't show the nice shoulder at 0 that the literature instructs us to expect.
+
+\texttt{TO DO: Images}
+
+Figure \ref{fig:simDist} shows the distances from 36 randomly placed VCPs to the objects within the max observation distance. As we can see, there are simply fewer objects close to the observer, which increases as the distance moves away. (Rephrase) This is an artifact of the VCP being a circle. 
+
+\texttt{TO DO: Same graph for Line transect}
+
+\begin{figure}
+	\center
+	\includegraphics[width=0.5\textwidth]{../images/simulated_bird_distances.pdf}
+	\caption{Simulated bird distances from center point of 36 randomly placed VCPs.\label{fig:simDist}}
+		
+\end{figure}
+
+With a line transect, as we move away from the line, the distance "surveyed" increases linearly. With a point transect, as we move away from the point, the distance surveyed increases exponentially. 
+
+\texttt{TO DO: Equations showing what happens when you compare distance at r vs distance at r+x}
+
+
+\begin{figure}
+	\centering
+	\caption{Squares (Line Transect, solid) vs. Circles (Point Transect, dashed)}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{../images/rect-circ-area.pdf}
+		\caption{Area of rectangle vs circle at same distance from point/line}
+		\label{fig:structured}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{../images/rect-circ-detection.pdf}
+		\caption{Estimated detection numbers for rectangle (solid) vs circle (dashed)}
+		\label{fig:structured}
+	\end{subfigure}
+	
+
+\end{figure}
+
+
+Thought - is this why we use h(0) for the point transects? need to verify, h(r) = f'(r)??  budkland 1987 paper has h(r) = f(r)/r, need to check teh book.
+
 \end{document}
