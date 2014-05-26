@@ -112,6 +112,8 @@ write.csv(D.hat.df, "data/moveSim_05-25.csv", row.names=F)
 
 ggplot(D.hat.df, aes(x=Dhat))+geom_histogram(aes(y=..density..), binwidth=1, colour="white", fill=OSUOrange)+facet_grid(Layout~MoveType)+theme_bw(18)+geom_vline(xintercept=20, colour=OSURed, linetype="longdash", size=1)+xlab("Density Estimates")+ylab("Frequency")
 
+ggsave("images/MovementSim2.pdf", width=10, height=6)
+
 #hmm. not really the drastic differences I was expecting.
 #after tweaking movement, it looks better
 
