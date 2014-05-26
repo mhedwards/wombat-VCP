@@ -40,7 +40,7 @@ if(move.type="temp"){
 distances <- runif(20, 0, .2)
 
 VCP.movement <- function(distances, threshold=0.1){
-  hnorm.p <- VCP.defineHalfnorm(threshold)
+  hnorm.p <- VCP.defineHalfnorm(threshold*2, .75)
   # determine probability of movement
   pi.raw <- hnorm.p$delta*dhalfnorm(distances, hnorm.p$theta)
   #determine if it moved
@@ -49,12 +49,12 @@ VCP.movement <- function(distances, threshold=0.1){
   # This is arbitrary. Assuming an average movement of 50 m (.05) at 0 distance, 
   #   reducing linearly to 0 movement at 110 m (.110). I felt there would be more movement
   #   closer to teh station, and less further away.
-  m<- -.05/.110 # slope downwards (less movement, further away)
+  m<- -.05/.150 # slope downwards (less movement, further away)
   b <- .05  # 50 meters of movement at 0
   mvmt.base <- m*distances+b
 
   # add a little noise to the movement
-  mvmt.noise <- rnorm(length(pi.raw), sd=(threshold/10))
+  mvmt.noise <- abs(rnorm(length(pi.raw), sd=(threshold/10))) # try this with only positive noise
   
   mvmt <- moved*(mvmt.base+mvmt.noise)
   return(mvmt)
@@ -175,8 +175,9 @@ for(i in 1:nsim){
 ddist.mov <- Rj.move$Rj
 ddist.still <- Rj.still$Rj
 brks <- seq(0,.62, by=.02)
-hist(ddist.mov, breaks=brks)
+hist(ddist.mov, breaks=brks, freq=FALSE)
 hist(ddist.still, breaks=brks)
+abline(a=.05, b=-.05/.150)
 
 # the hell? the "still" distances also have a drop close to the point
 
