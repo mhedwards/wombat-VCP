@@ -92,7 +92,7 @@ hist.info<- hist(coki.82$Distance, breaks=my_breaks)
 
 # I like how this is looking, but may be aggregating too much
 my_breaks <- c(seq(0,100,20),seq(120,200,20), seq(250,700,50))
-h
+
 
 hist.info2<- hist(coki.82$Distance, breaks=seq(0,700,5), freq=FALSE)
 by5 <- data.frame(x=hist.info2$mids, y=hist.info2$density*5)
@@ -103,7 +103,10 @@ th.y <- predict(by5.lo,th.x)
 th.y[1] <- th.y[141] <- 0
 
 
-ggplot()+geom_histogram(data=by5, aes(x, y), stat="identity")+geom_smooth(data=by5, aes(x, y), method="loess", span=0.2, size=3)+geom_line(inherit.aes=FALSE, aes(x=th.x, y=th.y), color="red", linetype=2, size=2)+theme_bw(18)+xlab("Detection Distance in Meters")+ylab('Detection Density')
+ggplot()+geom_histogram(data=by5, aes(x, y), stat="identity")+geom_smooth(data=by5, aes(x, y), method="loess", span=0.2, size=3, color=OSURed)+geom_line(inherit.aes=FALSE, aes(x=th.x, y=th.y), color=OSUBlue2, linetype=2, size=1.5)+theme_bw(18)+xlab("Detection Distance in Meters")+ylab('Detection Density')
+
+
+ggsave("images/loess.pdf", width=8, height=4)
 
 which.max(th.y) # 19
 th.y[19] # 0.02464387

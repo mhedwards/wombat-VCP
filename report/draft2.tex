@@ -36,13 +36,23 @@ Distance sampling has been around since the early 1900's. In the 1970's, more ri
 
 Recent studies that use distance sampling include Norwegian bird populations \parencite{pedersen2012}, Komodo dragon prey estimates \parencite{komodo2013}, Serengeti carnivore abundance \parencite{serengeti2011}, and estimates for butterfly populations \parencite{butterfly2011}. 
 
-With Line Transects, a (straight) line is randomly placed in the study area, then walked by the observer, with any objects of interest noted and the distance perpendicular to the transect recorded. With point transects, the observer stands in one spot, recording the direct line distance from herself to the object of interest as if it was projected on the ground. This results in data similar to the line transect, but with more safety for the observer as they do not have to watch for (moving) wildlife and watch where they are walking \cite{ramsey1979}.
+With Line Transects, a (straight) line is randomly placed in the study area, then walked by the observer, with any objects of interest noted and the distance perpendicular to the transect recorded. With point transects, the observer stands in one spot, recording the direct line distance from herself to the object of interest as if it was projected on the ground. This results in data similar to the line transect, but with more safety for the observer as they do not have to watch for potentially moving wildlife at the same time as navigating potentially treacherous terrain. \cite{ramsey1979}.
 
 With line transects, animals may react to an observer moving through the area by hiding or moving away. If the observer is standing still, and has allowed a ``cooling'' period for things to return to normal (possible with point transects), animal behavior may be more natural and less influenced by the presence of the observer.
 
 Observations of objects can take the form of visual sightings or detection of auditory cues, or one confirmed by the other, as long as an accurate distance can be measured.
 
 \textcite[6]{buckland2001} draws a distinction between point transects, where only the area immediately surrounding the point is surveyed (area of estimated perfect detectability), and Variable Circular Plots, where you census the area $\pi w^2$, where $w$ is the furthest distance at which you can observe the object of interest. However, in \textcite{buckland2006, quang1993} the terms are used interchangeably. They will be used interchangeably here also, with the understanding this paper addresses the second type, where an area of $pi*w^2$ is censused.
+
+Objects closer to the observer are typically easier to spot than objects further away. We can imagine that there is an area of (nearly) perfect detectability near the observer, that drops off the further away from the observer the object is. This detectability function is labeled $g(r)$, with $r$ being the observation distance. If no other covariates are tracked, we end up with a count of objects observed, and the distances from the line or point at which they were observed.
+
+It is preferable for the detection function, $g(r)$, to have a "shoulder" at 0, where the probability of detection is 1. A half-normal curve, scaled such that $g(0)=1$ is an example \parencite{buckland2001}.
+
+An estimate of population density is a count of objects observed, divided by the area in which they were observed, times the probability of observing the object at that distance.
+
+$\hat{D}=E[n]/(Area)*P(observing object|distance r)$
+
+The difficulty in distance sampling comes from estimating $g(r)$. Many methods have been proposed, all with their pros and cons. This paper concentrates on the kernel method, as detailed by \textcite{quang1993}. This is a non-parametric method, using the kernel of a normal distribution to obtain a kind of ``average observation distance'' to be used in the calculation of the effective area surveyed for our population density estimate.
 
 \section{Micronesian Bird Data}
 \begin{figure}
@@ -105,60 +115,32 @@ There are additional assumptions listed by both Buckland and \textcite{ramsey197
 
 % Not explicitly stated, is that we are assuming the objects of interest are homogeneously distributed throughout the region being surveyed. REFERENCE
 
-\subsection{Broad Strokes}
-In general, an estimate of population density is a count of objects observed divided by the area in which they were observed times the probability of observing the object. (Ramsey, Scott 1979)
-
-Equation 1: $D = E[n]/(A_r)(P_r)$
-
-In practice, the expected value of n is taken to be n, the number of objects observed. The estimation of the denominator is where things get tricky.
-
-If we combine $(A_r)(P_r)$ into an effective area we get:
-
-Equation 2: $A~_R = 2(pi) int?0?R g(y)ydy$
-
-$G(r)$ is the detectability function, and represents the probability of detection at distance $r$. It is often scaled so that $g(0)=1$. (In terms of area of a circle, it is obvious that the $integral{g(y)ydy}$ represents $r^2$ in the $2pi r^2$ equation.)
-
-Much of the uncertainty in VCP estimation comes from how the effective area is estimated. $g(y)$ is often modeled as a parametric class (exponential, half-normal, hazard function) which is then scaled so that $g(0)=1$. In addition to guessing which function to use, we must also estimate the parameters. 
-
-It is plausible to think that as objects are further away from the observer, they are more difficult to detect, and therefore, we would have a greater probability of missing observations that were further away. So, in calculating $g(y)$, do we assume perfect detection out to the furthest point of observation? Or do we truncate our observations at some distance closer to the observer? Ramsey \& Scott (1979) refer to these as the effective radius ($\rho$) and the basal radius ($r$) respectively. 
-
-The problem lies in that in practice, we don't know where the basal radius is, and it must be estimated from our data.
 
 \subsection{Properties}
 \subsubsection{Bias \& Consistency}
-Buckland et al. (2001) and Ramsey \& Scott (1970) both stated that if our detectability estimate $g(z)=$1 out to $r$, then $D$ is unbiased. 
+\textcite{buckland2001,ramsey1979} Buckland et al. (2001) and Ramsey \& Scott (1970) both stated that if our detectability estimate $g(z)=$1 out to $r$, then $\hat{D}$ is unbiased. 
 
-Barry and Walsh (2001) compared design-based and  model-based estimates of density and variance. (Their focus was line transects, but they state it is analogous to point transects and the conclusions should carry across.) They concluded that model-based estimates were unbiased if and only if the assumptions of objects being independent and uniformly located held. They noted that in practice, this is probably not a feasible assumption. For design-based inference, they caution about both the density and variance estimates.
+\textcite{barry2001} Barry and Walsh (2001) compared design-based and  model-based estimates of density and variance. (Their focus was line transects, but they state it is analogous to point transects and the conclusions should carry across.) They concluded that model-based estimates were unbiased if and only if the assumptions of objects being independent and uniformly located held. They noted that in practice, this is probably not a feasible assumption. For design-based inference, they caution about both the density and variance estimates.
 
-Roeder, Dennis, \& Garton (1987) use simulations to demonstrate that no method is completely applicable in 100\% of situations, and will go sideways at some point, depending on the specific conditions.
+\textcite{roeder1987} Roeder, Dennis, \& Garton (1987) use simulations to demonstrate that no method is completely applicable in 100\% of situations, and will go sideways at some point, depending on the specific conditions.
 
-The overall conclusion is that, in theory, density estimates using VCPs are unbiased and (reasonably) consistent, but that the assumptions necessary for the theory to hold are untenable. 
-
-As stated in the section on choosing $g(r)$, it will vary depending on the specific situation, and it is up to the scientist and statistician to understand the data and choose the best approach.
+The overall conclusion is that, in theory, density estimates using VCPs are unbiased and (reasonably) consistent, but that the assumptions necessary for the theory to hold are untenable. The appropriate estimation of $g(r)$ will vary depending on the specific situation, and it is up to the scientist and statistician to understand the data and choose the best approach.
 
 
 
 \section{Simulation}
-As seen in the previous section, the issue of independence of the point transects does not have a consensus in the literature. If independence is required for proper estimation, then the random-systematic placement method should not be used. 
+As seen in the previous section, the issue of independence of the point transects does not have a consensus in the literature. If independence is required for proper estimation, then the random-systematic placement (hereafter, ``transect'') layout should not be used. 
 
 Through simulation, we can explore what happens under three different VCP placement schemes, and compare the resulting density estimates to their known values to evaluate performance.
 
 \subsection{VCP Arrangement}
-Simulation will address three options for VCP arrangement:
+\label{sec:layout}
+To examine the effect of VCP overlap, we will look at three options for VCP arrangement:
 \begin{itemize}
-\item Structured: VCPs placed so that observation distances do not overlap
-\item Random: VCPs placed completely at random
-\item Random-Systematic: Two transects of 18 stations each, placed according to Ramsey et al's design: 150 m between stations, 2 km distance between parallel transects.
+	\item Structured: VCPs placed so that observation distances do not overlap
+	\item Random: VCPs placed completely at random
+	\item Transect: Two transects of 18 stations each, placed according to \textcite{micronesian} design: 150 m between stations, 2 km distance between parallel transects.
 \end{itemize}
-
-Figures \ref{fig:structured} and \ref{fig:random} illustrate the first two arrangements. Density in these images is based on the 20 birds per km$^2$ of the Palie region on Rota from. The surveyed area of the Palie region totaled 9.41 km$^2$ during the original survey, and contained two transects of 16 and 17 stations each, 33 stations total \parencite{micronesian}.
-
-As seen in Figure~\ref{fig:by5}, there is very little detection happening beyond 500 m. There are 15 observations beyond 500 m, which is 0.9\% of the data. 
-
-Treating 500 m as our truncation distance $w$, the study area in the simulation has been raised to 36 km$^2$ to allow for stations where the observation area did not overlap. An area of 49 km$^2$ is generated with the given density, then truncated to 36 km$^2$ to prevent any edge effect from the random generation of points. The stations are placed a minimum of 500 km (0.5 on the graph) away from the edges to prevent border truncation. 
-
-For the random-systematic, an angle was chosen between $0$ and $\pi$. A transect of 18 stations 150 m apart was constructed, and a second transect of 18 stations constructed running parallel. The transects were then randomly placed with in the graph, no closer to the edge than 500 km (0.5 on graph.) Figures 4 and 5 are two examples.
-
 \begin{figure}
 	\centering
 	\caption{VCP Layout options. On graph, 1 unit = 1 km. Circles represent 200 m mark.}
@@ -185,17 +167,24 @@ For the random-systematic, an angle was chosen between $0$ and $\pi$. A transect
 	\end{subfigure}
 	\label{fig:layouts}
 \end{figure}
+Figures~\ref{fig:structured} and \ref{fig:random} illustrate the first two arrangements. Density in these images is based on the 20 birds per km$^2$ of the Palie region on Rota. 
+
+As seen in Figure~\ref{fig:by5}, there is very little detection happening beyond 500 m. There are a total of 15 observations beyond 500 m, which is 0.9\% of the data. 
+
+The surveyed area of the Palie region totaled 9.41 km$^2$ during the original survey. Treating 500 m as our truncation distance $w$, the study area in the simulation has been raised from 9.41 km$^2$ to 36 km$^2$ to allow for stations where the observation area did not overlap. An area of 49 km$^2$ is generated with the given density, then truncated to 36 km$^2$ to prevent any edge effect from the random generation of points. The stations are placed a minimum of 500 km (0.5 on the graph) away from the edges to prevent border truncation. 
+
+The Palie region contained two transects of 16 and 17 stations each, 33 stations total \parencite{micronesian}. For the transect layout, an angle was chosen between $0$ and $\pi$. A transect of 18 stations 150 m apart was constructed, and a second transect of 18 stations constructed running parallel. The transects were then randomly placed with in the graph, no closer to the edge than 500 km (0.5 on graph.) This transect layout is illustrated in Figures~\ref{fig:transect1} and \ref{fig:transect2}. The total of 36 VCPs was carried over to the Structured and Random layouts, for an equivalent number of points.
 
 \section{Simulation Setup}
-\subsection{$g(0)$}
-\subsubsection{Half Normal}
+The first simulation compares the three layouts described in section~\ref{sec:layout} with two different options for $g(r)$, a half-normal detection probability function, and a detection probability estimated from the empirical observation distances.
+\subsection{Half Normal}
 For a maximum possible observation distance of 0.500 (500 m), the parameter for the half-normal detection function is $\theta = 8.77$, with a scale parameter $\delta = 0.179$.
 
 The half-normal parameter $\theta$ is related to the standard deviation of a standard normal distribution by the relationship:
 
 $\theta = \frac{\sqrt{\pi /2}}{\sigma}$
 
-If we estimate $\sigma$ by $w/3.5$ (with $w$ being the maximum distance at which we might observe an object, and 3.5 being the standard deviation point where P(X > 3.5) < 0.001) then theta is:
+If we estimate $\sigma$ by $w/3.5$ (with $w$ being the maximum distance at which we might observe an object, and 3.5 being the standard deviation point where $P(X > 3.5) < 0.001$) then $\theta$ is:
 
 $\sigma = w/3.5 = 0.1429$
 
@@ -205,25 +194,23 @@ For a half-normal with parameter $\theta=8.7732$, $f(0)=5.5852$ so to scale the 
 
 $\delta_{HN} = 1/5.5852 = 0.1790$
 
-\subsubsection{Empirical Observations}
-\begin{figure}
+Half-normal density functions were done in R with the \texttt{fdrtool} package.
 
+\subsection{Empirical Observations}
+\begin{figure}
 	\includegraphics[width=\textwidth]{../images/loess.pdf}
 	\caption{Empirical Observation Distances from Original data in meters, with LOESS regression lines. Bin width=5 m\label{fig:by5}}
-		
 \end{figure}
 
-We can see in Figure \ref{fig:by5} that above 100 m, observations were commonly heaped into 10 or 25 m distances, with the latter being more heavily used. Above 200 m, 50 m heaps were common. To estimate a density function, I used a loess regression with a span of 0.2 on the counts from 5 meter bins of the empirical data. This is the blue line in Figure \ref{fig:by5}. 
+We can see in Figure \ref{fig:by5} that above 100 m, observations were commonly heaped into 10 or 25 m distances, with the latter being more heavily used. Above 200 m, 50 m heaps were common. 
 
-Using the \texttt{hist()} function in R, the 1982 observation distances were broken into counts by 5 m groups. Using the bin midpoints, the density estimate was multiplied by 5 to get the density value for that bin. A LOESS regression was run with the midpoint as $x$ and $y=density*5$, using the \texttt{loess()} package in R.
+Using the \texttt{hist()} function in R, the 1982 observation distances were broken into counts by 5 m groups. Using the bin midpoints, the density estimate was multiplied by 5 to get the density value for that bin. A LOESS regression was run with the midpoint as $x$ and $y=density*5$, using the \texttt{loess()} package in R with a span of 0.2. This is the solid line in Figure~\ref{fig:by5}. 
 
-This gives us an object that can be used with \texttt{predict()} to get density estimates for specific distances. The values generated by feeding our midpoints into our prediction function are represented by the red dashed line in Figure \ref{fig:by5}. 
+This gives us an object that can be used with \texttt{predict()} to get density estimates for specific distances. The values generated by feeding our midpoints into our prediction function are represented by the dashed line in Figure~\ref{fig:by5}. 
 
 Following the scaling of the highest point to 1, as was done with the half normal curve, where the highest point was $g(0)$, we also find $\delta$ for this empirical detection probability. A sequence of $x$ values was generated covering the range from 0--500 m. This was plugged into the \texttt{predict()} function using our LOESS object. The highest density value was then scaled to be 1:
 
 $\delta_{EMP}=\frac{1}{max(predicted)}=40.5780$ 
-
-\texttt{I know I read about how to deal with the random-systematic method, but now, of course, can't find it. With Line transect sampling, they essentially treat the data as if it came from one long transect, so that's what I'm going to do until I can find another reference.}
 
 \section{Results}
 \subsection{Half-normal vs. Empirical $g(x)$}
@@ -233,7 +220,7 @@ $\delta_{EMP}=\frac{1}{max(predicted)}=40.5780$
 	\caption{1000 Simulations, Empirical vs Half-normal Detection function, for three different layouts. \label{fig:sim1}}
 		
 \end{figure}
-Figure \ref{fig:sim1} shows the results of 1000 simulations, each analyzed with Empirical and Half-normal detection function, $g(x)$, and using each of the three layouts, Structured, Random, and Transect. All $\hat{D}$  were done using the kernel method with a normal kernel (Quang 1993).
+Figure \ref{fig:sim1} shows the results of 1000 simulations, each analyzed with Empirical and Half-normal detection function, $g(x)$, and using each of the three layouts, Structured, Random, and Transect. All $\hat{D}$  were done using the kernel method with a normal kernel \parencite{quang1993}.
 
 For each simulation, a single layout of ``objects'' is generated, and that map is analyzed by each of the 6 combinations of VCP layout and $g(x)$. 
 
@@ -261,6 +248,49 @@ Addressing our primary question of interest, does the overlap of the VCP affect 
 \texttt{TO DO: along with d.hat, get the variance estimate for d.hat, and return T/F if the true value was contained in the interval.}
 
 \texttt{TO DO: look at 3 moved categories for the 3 layouts}
+
+\subsection{Movement or No Movement}
+\begin{figure}
+
+	\includegraphics[width=\textwidth]{../images/MovementSim2.pdf}
+	\caption{1000 Simulations, Movement, Temporary Movement and Permanent Movement for three different layouts. \label{fig:sim2}}
+		
+\end{figure}
+In the Figure~\ref{fig:82dist}, the histogram of empirical observation distances, there appears to be evidence of movement away from the observer. To see if the movement would have an effect on the independence of our VCPs, depending on placement, a second simulation was run.
+
+As with the previous simulation, the same three layout types were used. Three movement classes were defined:
+\begin{enumerate}
+\item No Movement: Same as previous simulation, objects stayed at original point
+\item Temporary Movement: Objects within 100 m moved directly away from observer, with more movement if they started closer to observer. They were reset to original location before moving to next VCP
+\item Permanent Movement: As with temporary movement, only not reset before moving on to next VCP.
+\end{enumerate}
+
+Figure~\ref{fig:sim2} and Table~\ref{table:sim2} illustrate the results. As with the previous simulation, the results are visually very similar for all three layout types. All are biased low, with more bias in the simulations with movement. Unexpectedly, the type of movement, temporary or permanent, does not seem to play a large part in changing the bias. 
+
+For this simulation, the movement was simulated to happen within the first 100 m from the observer (0.1 on graph), as visually indicated by Figure~\ref{fig:82dist}. 
+
+
+\begin{table}
+	\caption{Half-normal detection function, three layouts, three movement types. 1000 simulations.}
+	\begin{tabular}{ r| r r| r r| r r|}
+	
+		& \multicolumn{2}{|c|}{No Movement}	& \multicolumn{2}{|c|}{Compounded Mvmt}	& \multicolumn{2}{|c|}{Temporary Mvmt}\\ 
+ \hline \hline
+ 
+ Layout		& Mean $\hat{D}$	& \% Capture & Mean $\hat{D}$ & \% Capture & Mean $\hat{D}$ & \% Capture	\\ \hline \hline
+ Random		& 17.86 			& 94.2\% 		& 11.86	& 59.6\%	& 11.76	& 59.3\% \\
+ Structured	& 18.01 			& 94.3\% 		& 11.90 & 59.9\% 	& 11.74 & 59.5\% \\
+ Transect	& 17.90 			& 90.8\% 		& 12.42 & 65.0\% 	& 11.75 & 58.0\% \\ \hline
+
+	\end{tabular}
+	\label{table:sim2}
+\end{table}
+
+no small distances, so overestimating area surveyed compared to # ob
+
+we will be low if top small, bottom large.
+
+
 
 \section{The Problem with Circles}
 To test the effectiveness of my movement algorithm, I compared the detection distances from the data where the objects moved, to the detection distances from the same data, assuming they stayed still. The movement data, (left panel, Figure \#) is squashed more towards 0.1 Km than the still data (right panel). But there's a problem. The still data doesn't show the nice shoulder at 0 that the literature instructs us to expect.

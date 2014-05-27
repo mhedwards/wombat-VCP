@@ -11,7 +11,7 @@ library(dplyr)
 library(ggplot2)
 
 # get coords, using a density of 20 birds/km2
-x.y <- get.Coords( 20)
+x.y <- get.Coords(20)
 
 ## -------------- Structured VCP layout -------------- 
 # get the equi-spaced, independent VCP locations.
@@ -27,7 +27,7 @@ for(i in 1:36) {
 
 # generate and save plot
 # you will get warnings when running these, because it is trimming out points to get to the 0,6 bounds
-ggplot()+geom_point(data=x.y, aes(x,y))+geom_point(aes(x=stat.X, y=stat.Y), color="#D55E00", inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour="#D55E00", size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
+ggplot()+geom_point(data=x.y, aes(x,y))+geom_point(aes(x=stat.X, y=stat.Y), color=OSUOrange, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUOrange, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
 
 ggsave("images/layout_structured.pdf", width=8, height=8)
 
@@ -46,7 +46,7 @@ for(i in 1:36) {
 }
 
 # generate and save plot
-ggplot()+geom_point(data=x.y, aes(X,Y))+geom_point(aes(x=stat.X, y=stat.Y), color="#D55E00", inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour="#D55E00", size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
+ggplot()+geom_point(data=x.y, aes(x,y))+geom_point(aes(x=stat.X, y=stat.Y), color=OSUOrange, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUOrange, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
 
 ggsave("images/layout_random.pdf", width=8, height=8)
 
@@ -139,19 +139,20 @@ stat.df <- data.frame(
   t_id = stat.temp$t_id
 )
 
+stat.df <- VCP.transectLayout()
 
 angle <- seq(-pi, pi, length=50)
 ell <- data.frame()
 for(i in 1:nrow(stat.df)) {
-  df <- data.frame(gp=i, a = sin(angle)*0.2+stat.df$stat.X[i], b = cos(angle)*0.2+stat.df$stat.Y[i])
+  df <- data.frame(gp=i, a = sin(angle)*0.2+stat.df$x[i], b = cos(angle)*0.2+stat.df$y[i])
   ell <- rbind(ell, df)
 }
 
 
-ggplot()+geom_point(data=x.y, aes(X,Y))+geom_point(data=stat.df, aes(x=stat.X, y=stat.Y), color="#D55E00", inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour="#D55E00", size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))
+ggplot()+geom_point(data=x.y, aes(x,y))+geom_point(data=stat.df, aes(x=x, y=y), color=OSUOrange, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUOrange, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
 
 
-ggsave("images/layout_rand-sys-6.pdf", width=8, height=8)
+ggsave("images/layout_rand-sys-4.pdf", width=8, height=8)
 
 
 ## ------------------------  LOess REgression ----------------------------------
