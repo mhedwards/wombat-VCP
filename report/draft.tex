@@ -1,10 +1,5 @@
 \documentclass[12pt]{article}
 
-\title{\vspace{-2.0cm}Stuff}
-\title{ST 599 Project 1 Report}
-\author{Wanli Zhang \& Matt Edwards}
-\date{21st April 2014}
-
 \usepackage{fullpage}
 \usepackage{floatrow}
 \usepackage{fourier}
@@ -12,86 +7,87 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+%\usepackage[round,authoryear]{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber,citestyle=authoryear,bibstyle=authoryear,maxbibnames=10]{biblatex}
+\addbibresource{VCPbibliography.bib}
 
 \begin{document}
+cite \cite{buckland2001} \cite{komodo2013} \\
+cite* \cite*{buckland2001} \cite*{komodo2013}\\
+parencite \parencite{buckland2001} \parencite{komodo2013}\\
+parencite* \parencite*{buckland2001} \parencite*{komodo2013}\\
+textcite \textcite{buckland2001} \textcite{komodo2013}\\
+smartcite - does the super script/foot note thing.
+\newpage
 \begingroup  
   \centering
-  \LARGE Master's Report - Draft\\[1em]
+  \LARGE Master's Report - Variable Circular Plots: Station Placement and the Independence Assumption\\[1em]
   \large Matt Edwards\\
-  11 May 2014\par
+  26 May 2014\par
 \endgroup
-\texttt{NOTE TO (maybe) FIX: I've been using Point Transect and VCP interchangeably, Buckland makes a distinction (2004, pg 6) that Point Transects you only survey the area immediately around the point, where as VCP, you are censusing $\pi w^2$. However, in the 2006 paper, he refers to them interchangeably.}
+
 \section{Introduction}
-Transects, both point and line, are a method of population density estimation often used in the ecological sciences. They are useful when populations are too small to be seen from the air (birds, rodents) or may be masked by the canopy (ground plants.) Recent studies that use distance sampling include Norwegian bird populations (Pedersen et al. 2012), Komodo dragon prey estimates (Ariefiandy et al. 2013), Serengeti carnivore abundance (Durant et al. 2011), and estimates for butterfly populations (Isaac et al. 2011). A study by Cox et al. extends point transect sampling for use with underwater acoustics for estimates of krill populations (2011), and a study by Rowcliffe et al. combines distance sampling with camera traps to estimate populations (2011). 
+Estimating population density of plants or animals is a persistent issue in the ecological sciences. Distance sampling, in the form of line and point transects (alternatively, Variable Circular Plots (VCP)), is a common estimation method. They are useful when populations are too small to be seen from the air (birds, rodents) or may be masked by the canopy (ground plants.)
 
-\subsection{History}
-\texttt{TO DO}
+Distance sampling has been around since the early 1900's. In the 1970's, more rigorous scientific methods were applied, including papers by Ramsey and Scott \parencite*{ramsey1979,ramsey1981} which augmented work done by Emlen in 1971. \cite{burnham1980} is a monograph on the theory and application of line transect sampling. Non-parametric methods have been examined by \textcite{quang1993,mack1998}. Distance sampling continues to be used and modified, combined with mark-recapture methods \parencite{laake2011}, extended for use with underwater acoustics for estimates of krill populations \parencite{krill2011}, and a study by \textcite{camera2011} combines distance sampling with camera traps to estimate populations. 
 
-\subsection{Micronesian Bird Data}
-The Micronesian Forest Bird Survey of 1982 (Ramsey, et al.) is a work using Variable Circular Plots (VCPs) placed using a random-systematic transect design to monitor the density of several bird species in the Micronesian islands.
+\textcite{buckland2001} has a more in-depth discussion of the history of distance sampling. 
 
-Each island was divided into regions. Initial transects were given random positions and angles, with subsequent transects placed parallel, 2km apart. Stations were placed every 150m along the transects. Two observers, standing 20 m apart, would wait several minutes for the wildlife to quiet down after their arrival, and then spend 8 minutes noting any birds they could observe either visually or aurally. Distance and species were noted, as well as other covariates such as foliage density, weather conditions, etc. 
+Recent studies that use distance sampling include Norwegian bird populations \parencite{pedersen2012}, Komodo dragon prey estimates \parencite{komodo2013}, Serengeti carnivore abundance \parencite{serengeti2011}, and estimates for butterfly populations \parencite{butterfly2011}. 
 
-Figure 1 illustrates the distance data for the Collared Kingfisher. This data represents the aggregated data from two islands, Tinian and Rota, and all four observers. We can observe several things in this plot:
-
-First, there are very low counts of birds immediately around the station, a peak at around 100 m, a fairly level section from 100--200 m, and a drop off after 200 m. This would seem to indicate that the presence of the observers caused either movement away from the station (the crest around 100m) or a suppression of vocalizations and/or movement directly around the station. 
-
-Secondly, note that the detection distances are high between 100--200 m, and recall that the stations were place 150 m apart. Since the stations on a transect were (generally) visited in sequence, this means it is possible a bird was observed from more than one station. 
-
-Lastly, the further away from the station, the distance observations were heaped into categories. With smaller bin widths, this is also evident in the 100--200 m range as well.
-
-
-
-\begin{figure}
-\caption{Aggregated Collared Kingfisher Observation Distances 1982, Rota \& Tinian}
-\includegraphics[width=\textwidth]{../images/histogram_distance.pdf}
-\end{figure}
-
-\texttt{I don't like the flow here.}
-\section{Application}
-With Line Transects, a (straight) line is randomly placed in the study area, then walked by the observer, with any objects of interest noted and the distance perpendicular to the transect recorded. With point transects, the observer stands in one spot, recording the direct line distance from herself to the object of interest as if it was projected on the ground. This results in data similar to the line transect, but with more safety for the observer as they do not have to watch for (moving) wildlife and watch where they are walking. (Ramsey, Scott 1979) VCP have the added benefit of allowing the wildlife to settle. Animals may react to an observer moving through the area by hiding or moving away. If the observer is standing still, and has allowed a ``cooling'' period for things to return to normal, animal behavior may be more natural and less influenced by the action of the observer.
+With Line Transects, a (straight) line is randomly placed in the study area, then walked by the observer, with any objects of interest noted and the distance perpendicular to the transect recorded. With point transects, the observer stands in one spot, recording the direct line distance from herself to the object of interest as if it was projected on the ground. This results in data similar to the line transect, but with more safety for the observer as they do not have to watch for (moving) wildlife and watch where they are walking \cite{ramsey1979}. VCP have the added benefit of allowing the wildlife to settle. Animals may react to an observer moving through the area by hiding or moving away. If the observer is standing still, and has allowed a ``cooling'' period for things to return to normal, animal behavior may be more natural and less influenced by the presence of the observer.
 
 Observations of objects can take the form of visual sightings or detection of auditory cues, or one confirmed by the other, as long as an accurate distance can be measured.
 
-\subsection{Notation}
-This notation is borrowed from Quang (1993) following Buckland (1987)
+\textcite[6]{buckland2001} draws a distinction between point transects, where only the area immediately surrounding the point is surveyed (area of estimated perfect detectability), and Variable Circular Plots, where you census the area $\pi w^2$, where $w$ is the furthest distance at which you can observe the object of interest. However, in \textcite{buckland2006, quang1993} the terms are used interchangeably. They will be used interchangeably here also, with the understanding this paper addresses the second type, where an area of $pi*w^2$ is censused.
 
-\begin{tabular}{r l}
-$t$:	&	Number of plots surveyed\\
-$D$:	& Common density of animals in all plots\\
-$m_j$:	& Number of detected animals in the $j$th plot\\
-$\bar m$:	& Average number detected per plot\\
-$\mu$:	& Expected number of animals in a plot, $\mu = E(m_j)$\\
-$n$:	& Aggregate numbe of animals detected in all plots, $n=\sum_{j=1}^t m_j$\\
-$\lambda$:	&	Expected total number of detected animals in all plots, $\lambda=E(n)=t\mu$\\
-$R_i$:	& Distance from station to the $i$th detected animal\\
-$R_1,\cdots,R_n$: & Detected distances pooled from all plots\\
-$s$:	& Sample standard deviation of $R_1,\cdots,R_n$\\
-$f(r)$: & Common probability density function (pdf) of the detected distances, $R_1,\cdots,R_n$\\
-$h$: 	& Bandwidth used in kernel estimation
-\end{tabular}\\
+\subsection{Micronesian Bird Data}
+\begin{figure}
+	\caption{Aggregated Collared Kingfisher Observation Distances, Rota \& Tinian, 20 m bins: \cite{micronesian}}
+	\includegraphics[width=\textwidth]{../images/histogram_dist_20m.pdf}
+	\label{fig:82dist}
+\end{figure}
+The Micronesian Forest Bird Survey \cite{micronesian} is a work using Variable Circular Plots (VCPs) placed using a random-systematic transect design to monitor the density of several bird species in the Micronesian islands.
 
-For a typical individual plot:
+Each of the five islands was divided into regions. Initial transects were given random positions and angles, with subsequent transects placed parallel, 2km apart (the ``random-systematic'' method). Stations were placed every 150m along the transects. Two observers, standing 20 m apart, would wait several minutes for the wildlife to quiet down after their arrival, and then spend 8 minutes noting any birds they could observe either visually or aurally. Distance and species were noted, as well as other covariates such as foliage density, and weather conditions. 
 
-\begin{tabular}{r l}
-$N$:	&	True number of animals in the plot (unknown)\\
-$m$:	&	Number of detected animals in the plot\\
-$g(r)$:	&	Radial detection function, $g(r)$=Pr(Animal is detected | Animal is at distance $r$)\\
-$w$:	&	Distance beyond which no animals can be detected (= radius of the plot)\\
-$p$:	& Mean detection probability within the plot\\
-$B$:	&   $B = 2/(pw^2)$\\
+Figure~\ref{fig:82dist} illustrates the distance data for the Collared Kingfisher. This data represents the aggregated data from two islands, Tinian and Rota, and all four observers. We can observe several things in this plot:
 
-\end{tabular}
+First, there are very low counts of birds immediately around the station, a peak at around 100 m, a fairly level section from 100--200 m, and a drop off after 200 m. This would seem to indicate that the presence of the observers caused either movement away from the station (the crest around 100m) or alternatively a suppression of vocalizations and/or movement directly around the station. 
+
+Secondly, the further away from the station, the distance observations were heaped into convenient distances. With smaller bin widths, this is also evident in the 100--200 m range as well.
+
+Lastly, note that the detection distances are high between 100--200 m, and recall that the stations were placed 150 m apart. Since the stations on a transect were (generally) visited in sequence, this means it is possible a bird could have been observed from more than one station. 
+
+\subsubsection{Independence}
+Both \textcite{ramsey1979,buckland1987} discuss the assumption that the VCPs are placed randomly through the study area. This would seem to implicitly state that their observational ranges might by chance overlap, meaning a single object of interest could be observed from more than one station.  \textcite[240]{thompson2012} likewise indicates random placement of line transects which would seem to allow for a potential overlap of observation zones. 
+
+\textcite{buckland2001} discuss the random placement of both line and point transects, without addressing the potential for sightings to overlap. \textcite{reynolds1980} state that the possibility of observing the same bird from two stations should be avoided. \textcite{buckland2006} says simulations showed that analysis was robust to violations of independence (meaning overlap, or multiple observations on same object).
+
+\textcite[233]{buckland2001} discuss that each line or point must be ``randomly and independently located,'' with ``an equal probability of selection'' for all portions of the study area.
+
+\textcite[235]{buckland2001} states ``Transects are normally spaced at a sufficient distance to avoid detecting an object from two neighboring transacts, although this is not usually critical unless sampling a line changes the animal distribution at neighboring, as yet unsampled lines.''
+
+They do state that for random-systematic transects, the methodology used by \textcite{micronesian}, that each transect line should be treated and analyzed as a cluster.
+
+In discussing line transects, \textcite{barry2001} treat it as a two-stage sample, with non-unique clusters (each study object can be in more than one cluster) having an equal probability of selection. This would seem to (but does not explicitly) endorse the possibility of overlapping VCPs. 
+
+One of the assumptions of distance sampling is that the objects being studied are distributed homogeneously with some uniform density, $D$, throughout the space \textcite{ramsey1981}.  (If the data is clustered we have other problems, not addressed here.) If if the uniform distribution is the case, then it would make sense that it shouldn't matter if the observations overlap, as long as the act of observing at one station does not affect the observations at the neighboring station. This echoes Buckland’s statement a few paragraphs previous.
+
+\textcite[244]{thompson2012} mentions (page 244) that the systematic selection of transects (random position of first, with additional transects a fixed distance apart) does not affect the approximate unbiasedness of the density estimator, but will have an effect on the approximate unbiasedness of the variance estimator. 
+
+However, it is clear the literature is divided and unclear on whether or not our observation areas should overlap.
 
 \subsection{Assumptions}
-Buckland (2004) lists three primary assumptions:
+\textcite{buckland2001} lists three primary assumptions:
 \begin{enumerate}
-\item[i] Objects at the line or point are detected with certainty $g(0)=1$
-\item[ii] Objects are detected at their initial location
-\item[iii] Measurements are exact
+\item Objects at the line or point are detected with certainty $g(0)=1$
+\item Objects are detected at their initial location
+\item Measurements are exact
 \end{enumerate}
 
-There are additional assumptions listed by both Buckland and Ramsey and Scott (1979) and summarized by Quang (1993):
+There are additional assumptions listed by both Buckland and \textcite{ramsey1979} and summarized by \textcite{quang1993}:
 \begin{enumerate}
 \item[iv] Sightings of animals are independent events
 \item[v] at least one animal is detected $n > 0$
@@ -137,22 +133,7 @@ The overall conclusion is that, in theory, density estimates using VCPs are unbi
 
 As stated in the section on choosing $g(r)$, it will vary depending on the specific situation, and it is up to the scientist and statistician to understand the data and choose the best approach.
 
-\subsubsection{Independence}
-Assumption \texttt{ix}, that the VCPs are placed randomly through the study area, would seem to implicitly state that their observational ranges might by chance overlap, meaning a single object of interest could be observed from more than one station. Thompson (p240) likewise indicates random placement of line transects which would seem to allow for a potential overlap of observation zones. 
 
-Buckland et al (2001) also discuss the random placement of both line and point transects, without addressing the potential for sightings to overlap. Reynolds et al. (1980) state that the possibility of observing the same bird from two stations should be avoided. Buckland (2006) says simulations showed that analysis was robust to violations of independence (meaning overlap, or multiple observations on same object).
-
-On page 233, Buckland et al. (2001) discuss that each line or point must be ``randomly and independently located,'' with ``an equal probability of selection'' for all portions of the study area.
-
-On page 235, Buckland et al. states ``Transects are normally spaced at a sufficient distance to avoid detecting an object from two neighboring transacts, although this is not usually critical unless sampling a line changes the animal distribution at neighboring, as yet unsampled lines.''
-
-They do state that for random-systematic transects, the methodology used by Ramesy et al (1982), that each transect line should be treated and analyzed as a cluster.
-
-Barry and Welsh (2001) in discussing line transects, treat it as a two-stage sample, with non-unique clusters (each study object can be in more than one cluster) having an equal probability of selection. This would seem to (but does not explicitly) endorse the possibility of overlapping VCPs. 
-
-One of the assumptions of distance sampling is that the objects being studied are distributed homogeneously throughout the space [reference].  (If the data is clustered we have other problems, not addressed here.) If that is the case, then it would make sense thought-level idea that it shouldn't matter if the observations overlap, as long as the act of observing at one station does not affect the observations at the neighboring station. This echoes Buckland’s statement a few paragraphs previous.
-
-Thomson mentions (page 244) that the systematic selection of transects (random position of first, with additional transects a fixed distance apart) does not affect the approximate unbiasedness of the density estimator, but will have an effect on the approximate unbiasedness of the variance estimator. 
 
 \section{Simulation}
 As seen in the previous section, the issue of independence of the point transects does not have a consensus in the literature. If independence is required for proper estimation, then the random-systematic placement method should not be used. 
@@ -186,19 +167,20 @@ For the random-systematic, an angle was chosen between $0$ and $\pi$. A transect
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/layout_random.pdf}
 		\caption{Totally Random Layout}
-		\label{fig:structured}
+		\label{fig:random}
 	\end{subfigure}
 	
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/layout_rand-sys-4.pdf}
 		\caption{A Random-Systematic Layout}
-		\label{fig:structured}
+		\label{fig:transect1}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/layout_rand-sys-6.pdf}
 		\caption{Another Random-Systematic Layout}
-		\label{fig:structured}
+		\label{fig:transect2}
 	\end{subfigure}
+	\label{fig:layouts}
 \end{figure}
 
 \section{Simulation Setup}
@@ -304,12 +286,10 @@ With a line transect, as we move away from the line, the distance "surveyed" inc
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/rect-circ-area.pdf}
 		\caption{Area of rectangle vs circle at same distance from point/line}
-		\label{fig:structured}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/rect-circ-detection.pdf}
 		\caption{Estimated detection numbers for rectangle (solid) vs circle (dashed)}
-		\label{fig:structured}
 	\end{subfigure}
 	
 
@@ -318,4 +298,43 @@ With a line transect, as we move away from the line, the distance "surveyed" inc
 
 Thought - is this why we use h(0) for the point transects? need to verify, h(r) = f'(r)??  budkland 1987 paper has h(r) = f(r)/r, need to check teh book.
 
+
+
+
+\subsection{Notation}
+This notation is borrowed from Quang (1993) following Buckland (1987)
+
+\begin{tabular}{r l}
+$t$:	&	Number of plots surveyed\\
+$D$:	& Common density of animals in all plots\\
+$m_j$:	& Number of detected animals in the $j$th plot\\
+$\bar m$:	& Average number detected per plot\\
+$\mu$:	& Expected number of animals in a plot, $\mu = E(m_j)$\\
+$n$:	& Aggregate numbe of animals detected in all plots, $n=\sum_{j=1}^t m_j$\\
+$\lambda$:	&	Expected total number of detected animals in all plots, $\lambda=E(n)=t\mu$\\
+$R_i$:	& Distance from station to the $i$th detected animal\\
+$R_1,\cdots,R_n$: & Detected distances pooled from all plots\\
+$s$:	& Sample standard deviation of $R_1,\cdots,R_n$\\
+$f(r)$: & Common probability density function (pdf) of the detected distances, $R_1,\cdots,R_n$\\
+$h$: 	& Bandwidth used in kernel estimation
+\end{tabular}\\
+
+For a typical individual plot:
+
+\begin{tabular}{r l}
+$N$:	&	True number of animals in the plot (unknown)\\
+$m$:	&	Number of detected animals in the plot\\
+$g(r)$:	&	Radial detection function, $g(r)$=Pr(Animal is detected | Animal is at distance $r$)\\
+$w$:	&	Distance beyond which no animals can be detected (= radius of the plot)\\
+$p$:	& Mean detection probability within the plot\\
+$B$:	&   $B = 2/(pw^2)$\\
+
+\end{tabular}
+
+
+\section{Bibliography}
+
+\printbibliography
+%\bibliographystyle{plain}
+%\bibliography{VCPbibliography}
 \end{document}

@@ -1,5 +1,9 @@
 # Example Graphs
-
+OSUOrange <- rgb(243/255,115/255,33/255) #http://oregonstate.edu/brand/color-palette
+OSURed <- rgb(192/255,49/225,26/255)
+OSUBlue1 <- rgb(93/255, 135/255, 161/255)
+OSUBlue2 <- rgb(156/255, 197/255, 202/255)
+OSUMedBrn <- rgb(176/255,96/255,16/255)
 # requires dplyr
 # requires get.Coords from VCP_Utilities.R
 

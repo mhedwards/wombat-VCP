@@ -117,10 +117,15 @@ ggsave("images/MovementSim2.pdf", width=10, height=6)
 #hmm. not really the drastic differences I was expecting.
 #after tweaking movement, it looks better
 
-D.hat.df %.% group_by(Layout, MoveType) %.% summarise(avg=mean(Dhat), n.In=sum(inCI))
+move.summ <- D.hat.df %.% group_by(Layout, MoveType) %.% summarise(avg=mean(Dhat), n.In=sum(inCI))
 
 # the lack of difference between PermMove and TempMove makes sense. The majority of the movement (if that's what it was) was within the first 100 m. The stations are 150 m apart. It's not going to affect those quite as much, unless you have REALLY closely spaces VCP.
 
+library(stargazer)
+stargazer(move.summ)
+
+library(xtable)
+xtable(move.summ)
 
 ## ------ Set up for by-hand Method test
 xy.vcp <- VCP.structuredLayout()

@@ -12,3 +12,7 @@
 *.aux
 *.log
 *.gz
+*.bbl
+*.bcf
+*.blg
+*.run.xml
