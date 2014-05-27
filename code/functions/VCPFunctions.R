@@ -60,14 +60,14 @@ VCP.dhnorm <- function(r, params){
 ## OUTPUT:
 #  q: a scaling parameter so g(0)= 1
 #	theta: the parameter for the half-normal distribution.
-VCP.defineHalfnorm <- function(w){
+VCP.defineHalfnorm <- function(right.bound, g.zero=1){
   # calculate the approximate "standard deviation" so that detection probability at w is essentially 0
   # 	this was an estimate, and dividing w by 3.5 may not be teh optimal choice.
-  sigma <- w/3.5  
+  sigma <- right.bound/3.5  
   #calculate the parameter for the half normal (dhalfnorm documentation)
   theta <- sqrt(pi/2)/sigma 
   # q is a scale parameter so g(0) =1
-  delta<-1/dhalfnorm(0,theta)
+  delta<-g.zero/dhalfnorm(0,theta)
   # return the parameters
   params <- list(delta, theta)
   names(params) <- c("delta", "theta")
