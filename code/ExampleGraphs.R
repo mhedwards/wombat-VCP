@@ -166,7 +166,7 @@ th.y <- predict(by5.lo,th.x)
 th.y[1] <- th.y[141] <- 0
 
 
-ggplot()+geom_histogram(data=by5, aes(x, y), stat="identity")+geom_smooth(data=by5, aes(x, y), method="loess", span=0.2, size=3)+geom_line(inherit.aes=FALSE, aes(x=th.x, y=th.y), color="red", linetype=2, size=2)+theme_bw(18)+xlab("Detection Distance in Meters")+ylab('Detection Density')
+ggplot()+geom_histogram(data=by5, aes(x, y), stat="identity", fill=OSUOrange)+geom_smooth(data=by5, aes(x, y), method="loess", span=0.2, size=3, color=OSURed)+geom_line(inherit.aes=FALSE, aes(x=th.x, y=th.y), color=OSUBlue2, linetype=2, size=2)+theme_bw(18)+xlab("Detection Distance in Meters")+ylab('Detection Density')
 
 ggsave("images/loess.pdf", width=8, height=4)
 

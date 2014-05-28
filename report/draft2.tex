@@ -7,12 +7,16 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{textcomp}
 %\usepackage[round,authoryear]{natbib}
 \usepackage[utf8]{inputenc}
 \usepackage[backend=biber,citestyle=authoryear,bibstyle=authoryear,maxbibnames=10]{biblatex}
 \addbibresource{VCPbibliography.bib}
 
 \begin{document}
+Ignore this page, it's so I can have a reference for the different citation formats and will be removed before turning in the paper.
+
+
 cite \cite{buckland2001} \cite{komodo2013} \\
 cite* \cite*{buckland2001} \cite*{komodo2013}\\
 parencite \parencite{buckland2001} \parencite{komodo2013}\\
@@ -28,23 +32,23 @@ smartcite - does the super script/foot note thing.
 \endgroup
 
 \section{Introduction}
-Estimating population density of plants or animals is a persistent issue in the ecological sciences. Distance sampling, in the form of line and point transects (alternatively, Variable Circular Plots (VCP)), is a common estimation method. They are useful when populations are too small to be seen from the air (birds, rodents) or may be masked by the canopy (ground plants.)
+Estimating population density of plants or animals is a persistent issue in the ecological sciences. Distance sampling, in the form of line and point transects (alternatively, Variable Circular Plots (VCP)), is a common estimation method. They are useful when individual objects are too small to be seen from the air or may be masked by the canopy (birds, small animals, ground plants.)
 
-Distance sampling has been around since the early 1900's. In the 1970's, more rigorous scientific methods were applied, including papers by Ramsey and Scott \parencite*{ramsey1979,ramsey1981} which augmented work done by Emlen in 1971. \cite{burnham1980} is a monograph on the theory and application of line transect sampling. Non-parametric methods have been examined by \textcite{quang1993,mack1998}. Distance sampling continues to be used and modified, combined with mark-recapture methods \parencite{laake2011}, extended for use with underwater acoustics for estimates of krill populations \parencite{krill2011}, and a study by \textcite{camera2011} combines distance sampling with camera traps to estimate populations. 
+Distance sampling has been around since the early 1900's. In the 1970's, more rigorous scientific methods were applied, including papers by Ramsey and Scott \parencite*{ramsey1979,ramsey1981} which augmented work done by Emlen in 1971. \cite{burnham1980} is a monograph on the theory and application of line transect sampling. Non-parametric methods have been examined by \textcite{quang1993,mack1998}, among others. Distance sampling continues to be used and modified, combined with mark-recapture methods \parencite{laake2011}, extended for use with underwater acoustics for estimates of krill populations \parencite{krill2011}, and a study by \textcite{camera2011} combines distance sampling with camera traps to estimate populations. 
 
 \textcite{buckland2001} has a more in-depth discussion of the history of distance sampling. 
 
 Recent studies that use distance sampling include Norwegian bird populations \parencite{pedersen2012}, Komodo dragon prey estimates \parencite{komodo2013}, Serengeti carnivore abundance \parencite{serengeti2011}, and estimates for butterfly populations \parencite{butterfly2011}. 
 
-With Line Transects, a (straight) line is randomly placed in the study area, then walked by the observer, with any objects of interest noted and the distance perpendicular to the transect recorded. With point transects, the observer stands in one spot, recording the direct line distance from herself to the object of interest as if it was projected on the ground. This results in data similar to the line transect, but with more safety for the observer as they do not have to watch for potentially moving wildlife at the same time as navigating potentially treacherous terrain. \cite{ramsey1979}.
+With Line Transects, a (straight) line is randomly placed in the study area, then walked by the observer, with any objects of interest noted and the distance perpendicular to the transect recorded. With point transects, the observer stands in one spot, recording the direct line distance from herself to the object of interest as if it was projected on the ground, within the 360\textdegree. This results in data similar to the line transect, but with more safety for the observer as they do not have to watch for moving wildlife at the same time as navigating potentially treacherous terrain. \cite{ramsey1979}.
 
-With line transects, animals may react to an observer moving through the area by hiding or moving away. If the observer is standing still, and has allowed a ``cooling'' period for things to return to normal (possible with point transects), animal behavior may be more natural and less influenced by the presence of the observer.
+With line transects, animals may react to an observer moving through the area by hiding or moving away. If the observer is standing still, and has allowed a ``cooling'' period for things to return to normal--possible with point transects--animal behavior may be more natural and less influenced by the presence of the observer.
 
 Observations of objects can take the form of visual sightings or detection of auditory cues, or one confirmed by the other, as long as an accurate distance can be measured.
 
 \textcite[6]{buckland2001} draws a distinction between point transects, where only the area immediately surrounding the point is surveyed (area of estimated perfect detectability), and Variable Circular Plots, where you census the area $\pi w^2$, where $w$ is the furthest distance at which you can observe the object of interest. However, in \textcite{buckland2006, quang1993} the terms are used interchangeably. They will be used interchangeably here also, with the understanding this paper addresses the second type, where an area of $pi*w^2$ is censused.
 
-Objects closer to the observer are typically easier to spot than objects further away. We can imagine that there is an area of (nearly) perfect detectability near the observer, that drops off the further away from the observer the object is. This detectability function is labeled $g(r)$, with $r$ being the observation distance. If no other covariates are tracked, we end up with a count of objects observed, and the distances from the line or point at which they were observed.
+Objects closer to the observer are typically easier to spot than objects further away. Considering the probability of detecting an object, we can imagine that there is an area of (nearly) perfect detectability near the observer, that drops off the further away from the observer the object is. This detectability function is labeled $g(r)$, with $r$ being the observation distance. If no other covariates are tracked, we end up with a count of objects observed, and the distances from the line or point at which they were observed.
 
 It is preferable for the detection function, $g(r)$, to have a "shoulder" at 0, where the probability of detection is 1. A half-normal curve, scaled such that $g(0)=1$ is an example \parencite{buckland2001}.
 
@@ -62,7 +66,7 @@ The difficulty in distance sampling comes from estimating $g(r)$. Many methods h
 \end{figure}
 The Micronesian Forest Bird Survey \cite{micronesian} is a work using Variable Circular Plots (VCPs) placed using a random-systematic transect design to monitor the density of several bird species in the Micronesian islands.
 
-Each of the five islands was divided into regions. Initial transects were given random positions and angles, with subsequent transects placed parallel, 2km apart (the ``random-systematic'' method). Stations were placed every 150m along the transects. Two observers, standing 20 m apart, would wait several minutes for the wildlife to quiet down after their arrival, and then spend 8 minutes noting any birds they could observe either visually or aurally. Distance and species were noted, as well as other covariates such as foliage density, and weather conditions. 
+Each of the five islands included in the survey was divided into regions. Initial transects were given random positions and angles, with subsequent transects placed parallel, 2km apart (the ``random-systematic'' method). Stations were placed every 150m along the transects. Two observers, standing 20 m apart, would wait several minutes for the wildlife to quiet down after their arrival, and then spend 8 minutes noting any birds they could detect either visually or aurally. Distance and species were noted, as well as other covariates such as foliage density, and weather conditions. 
 
 Figure~\ref{fig:82dist} illustrates the distance data for the Collared Kingfisher. This data represents the aggregated data from two islands, Tinian and Rota, and all four observers. We can observe several things in this plot:
 
@@ -70,7 +74,7 @@ First, there are very low counts of birds immediately around the station, a peak
 
 Secondly, the further away from the station, the distance observations were heaped into convenient distances. With smaller bin widths, this is also evident in the 100--200 m range as well.
 
-Lastly, note that the detection distances are high between 100--200 m, and recall that the stations were placed 150 m apart. Since the stations on a transect were (generally) visited in sequence, this means it is possible a bird could have been observed from more than one station. How does this affect the independence of our observations? Will it make a difference in our final population density estimates?
+Lastly, note that the detection distances are high between 100--200 m, and recall that the stations were placed 150 m apart. Since the stations on a transect were generally visited in sequence, this means it is possible a bird could have been observed from more than one station. How does this affect the independence of our observations? Will it make a difference in our final population density estimates?
 
 \subsection{Independence}
 Both \textcite{ramsey1979,buckland1987} discuss the assumption that the VCPs are placed randomly through the study area. This would seem to implicitly state that their observational ranges might by chance overlap, meaning a single object of interest could be observed from more than one station.  \textcite[240]{thompson2012} likewise indicates random placement of line transects which would seem to allow for a potential overlap of observation zones. 
@@ -83,41 +87,15 @@ Both \textcite{ramsey1979,buckland1987} discuss the assumption that the VCPs are
 
 They do state that for random-systematic transects, the methodology used by \textcite{micronesian}, that each transect line should be treated and analyzed as a cluster.
 
-In discussing line transects, \textcite{barry2001} treat it as a two-stage sample, with non-unique clusters (each study object can be in more than one cluster) having an equal probability of selection. This would seem to (but does not explicitly) endorse the possibility of overlapping VCPs. 
+In discussing line transects, \textcite{barry2001} treats it as a two-stage sample, with non-unique clusters (each study object can be in more than one cluster) having an equal probability of selection. This would seem to (but does not explicitly) endorse the possibility of overlapping VCPs. 
 
-One of the assumptions of distance sampling is that the objects being studied are distributed homogeneously with some uniform density, $D$, throughout the space \textcite{ramsey1981}.  (If the data is clustered we have other problems, not addressed here.) If if the uniform distribution is the case, then it would make sense that it shouldn't matter if the observations overlap, as long as the act of observing at one station does not affect the observations at the neighboring station. This echoes Buckland’s statement a few paragraphs previous.
+One of the assumptions of distance sampling is that the objects being studied are distributed homogeneously with some uniform density, $D$, throughout the space \textcite{ramsey1981}.  (If the data is clustered we have other problems, not addressed here.) If the uniform distribution is the case, then it would make sense that it shouldn't matter if the observations overlap, as long as the act of observing at one station does not affect the observations at the neighboring station. This echoes Buckland’s statement a few paragraphs previous.
 
-\textcite[244]{thompson2012} mentions (page 244) that the systematic selection of transects (random position of first, with additional transects a fixed distance apart) does not affect the approximate unbiasedness of the density estimator, but will have an effect on the approximate unbiasedness of the variance estimator. 
+\textcite[244]{thompson2012} mentions that the systematic selection of transects (random position of first, with additional transects a fixed distance apart) does not affect the approximate unbiasedness of the density estimator, but will have an effect on the approximate unbiasedness of the variance estimator. 
 
 It is clear the literature is divided on whether or not our observation areas should overlap. VCP layouts similar to \textcite{micronesian} ``random-systematic'' layout are common in the literature.
 
-
-\subsection{Assumptions}
-\textcite{buckland2001} lists three primary assumptions:
-\begin{enumerate}
-	\item Objects at the line or point are detected with certainty $g(0)=1$
-	\item Objects are detected at their initial location
-	\item Measurements are exact
-\end{enumerate}
-
-There are additional assumptions listed by both Buckland and \textcite{ramsey1979} and summarized by \textcite{quang1993}:
-\begin{enumerate}
-	\setcounter{enumi}{3}
-	\item Sightings of animals are independent events
-	\item at least one animal is detected $n > 0$
-	\item detectability is the same for all animals at distance r and in all directions.
-	\item no animal can be detected beyond a finite distance $w: g(r) = 0$ for $r > w$
-	\item the function $g(r)$ has at least 4 bounded derivatives on $[0, w)$, and $g'(0)=0$
-	\item the stations are chosen at random in the study area
-\end{enumerate}
-
-%Ramsey 1979: Uniform distribution, random process distribution, independent distribution, 
-
-% Not explicitly stated, is that we are assuming the objects of interest are homogeneously distributed throughout the region being surveyed. REFERENCE
-
-
-\subsection{Properties}
-\subsubsection{Bias \& Consistency}
+\subsection{Bias \& Consistency}
 \textcite{buckland2001,ramsey1979} Buckland et al. (2001) and Ramsey \& Scott (1970) both stated that if our detectability estimate $g(z)=$1 out to $r$, then $\hat{D}$ is unbiased. 
 
 \textcite{barry2001} Barry and Walsh (2001) compared design-based and  model-based estimates of density and variance. (Their focus was line transects, but they state it is analogous to point transects and the conclusions should carry across.) They concluded that model-based estimates were unbiased if and only if the assumptions of objects being independent and uniformly located held. They noted that in practice, this is probably not a feasible assumption. For design-based inference, they caution about both the density and variance estimates.
@@ -126,12 +104,10 @@ There are additional assumptions listed by both Buckland and \textcite{ramsey197
 
 The overall conclusion is that, in theory, density estimates using VCPs are unbiased and (reasonably) consistent, but that the assumptions necessary for the theory to hold are untenable. The appropriate estimation of $g(r)$ will vary depending on the specific situation, and it is up to the scientist and statistician to understand the data and choose the best approach.
 
-
-
 \section{Simulation}
-As seen in the previous section, the issue of independence of the point transects does not have a consensus in the literature. If independence is required for proper estimation, then the random-systematic placement (hereafter, ``transect'') layout should not be used. 
+As seen in the previous section, the issue of independence of the point transects does not have a consensus in the literature. If independence is required for proper estimation, then the random-systematic placement (hereafter, ``transect'') layout may require some adjustment of the estimate to bring it in line with survey layouts where the observations areas do not overlap.
 
-Through simulation, we can explore what happens under three different VCP placement schemes, and compare the resulting density estimates to their known values to evaluate performance.
+Through simulation, we can explore what happens under three different VCP placement schemes, detection densities, and object movement, and compare the resulting density estimates to their known values to evaluate the performance of the estimators.
 
 \subsection{VCP Arrangement}
 \label{sec:layout}
@@ -157,27 +133,27 @@ To examine the effect of VCP overlap, we will look at three options for VCP arra
 	
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/layout_rand-sys-4.pdf}
-		\caption{A Random-Systematic Layout}
+		\caption{A Transect Layout}
 		\label{fig:transect1}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/layout_rand-sys-6.pdf}
-		\caption{Another Random-Systematic Layout}
+		\caption{Another Transect Layout}
 		\label{fig:transect2}
 	\end{subfigure}
 	\label{fig:layouts}
 \end{figure}
 Figures~\ref{fig:structured} and \ref{fig:random} illustrate the first two arrangements. Density in these images is based on the 20 birds per km$^2$ of the Palie region on Rota. 
 
-As seen in Figure~\ref{fig:by5}, there is very little detection happening beyond 500 m. There are a total of 15 observations beyond 500 m, which is 0.9\% of the data. 
+As seen in Figure~\ref{fig:82dist}, there is very little detection happening beyond 500 m. There are a total of 15 observations beyond 500 m, which is 0.9\% of the data. 
 
 The surveyed area of the Palie region totaled 9.41 km$^2$ during the original survey. Treating 500 m as our truncation distance $w$, the study area in the simulation has been raised from 9.41 km$^2$ to 36 km$^2$ to allow for stations where the observation area did not overlap. An area of 49 km$^2$ is generated with the given density, then truncated to 36 km$^2$ to prevent any edge effect from the random generation of points. The stations are placed a minimum of 500 km (0.5 on the graph) away from the edges to prevent border truncation. 
 
 The Palie region contained two transects of 16 and 17 stations each, 33 stations total \parencite{micronesian}. For the transect layout, an angle was chosen between $0$ and $\pi$. A transect of 18 stations 150 m apart was constructed, and a second transect of 18 stations constructed running parallel. The transects were then randomly placed with in the graph, no closer to the edge than 500 km (0.5 on graph.) This transect layout is illustrated in Figures~\ref{fig:transect1} and \ref{fig:transect2}. The total of 36 VCPs was carried over to the Structured and Random layouts, for an equivalent number of points.
 
-\section{Simulation Setup}
+\subsection{$g(r)$ Options}
 The first simulation compares the three layouts described in section~\ref{sec:layout} with two different options for $g(r)$, a half-normal detection probability function, and a detection probability estimated from the empirical observation distances.
-\subsection{Half Normal}
+\subsubsection{Half Normal}
 For a maximum possible observation distance of 0.500 (500 m), the parameter for the half-normal detection function is $\theta = 8.77$, with a scale parameter $\delta = 0.179$.
 
 The half-normal parameter $\theta$ is related to the standard deviation of a standard normal distribution by the relationship:
@@ -194,9 +170,9 @@ For a half-normal with parameter $\theta=8.7732$, $f(0)=5.5852$ so to scale the 
 
 $\delta_{HN} = 1/5.5852 = 0.1790$
 
-Half-normal density functions were done in R with the \texttt{fdrtool} package.
+Half-normal density functions were executed in R with the \texttt{fdrtool} package.
 
-\subsection{Empirical Observations}
+\subsubsection{Empirical Observations}
 \begin{figure}
 	\includegraphics[width=\textwidth]{../images/loess.pdf}
 	\caption{Empirical Observation Distances from Original data in meters, with LOESS regression lines. Bin width=5 m\label{fig:by5}}
@@ -212,24 +188,37 @@ Following the scaling of the highest point to 1, as was done with the half norma
 
 $\delta_{EMP}=\frac{1}{max(predicted)}=40.5780$ 
 
+\subsubsection{Movement}
+In the Figure~\ref{fig:82dist}, the histogram of empirical observation distances, there appears to be evidence of movement away from the observer. To see if the movement would have an effect on the independence of our VCPs, depending on placement, a second simulation was run.
+
+Three movement classes were defined:
+\begin{enumerate}
+\item No Movement: Objects stayed at original point.
+\item Temporary Movement: Objects within 100 m had a random chance to move directly away from observer. Movement was larger if they started closer to observer. They were reset to original location before moving to next VCP
+\item Permanent Movement: As with temporary movement, only not reset before moving on to next VCP. (Movement could compound if object was within the maximum observation radius for more than one VCP.)
+\end{enumerate}
+
+For this simulation, the movement was simulated to happen within the first 100 m from the observer (0.1 on graph), as visually indicated by Figure~\ref{fig:82dist}. The simulation was not intended to exactly model the movement observed by \textcite{micronesian}, but to get a general sense of what might happen to $\hat{D}$ in each of the two settings.
+
 \section{Results}
-\subsection{Half-normal vs. Empirical $g(x)$}
+\subsection{Half-normal vs. Empirical $g(r)$}
 \begin{figure}
 
 	\includegraphics[width=\textwidth]{../images/Emp_Vs_Hnorm.pdf}
-	\caption{1000 Simulations, Empirical vs Half-normal Detection function, for three different layouts. \label{fig:sim1}}
+	\caption{1000 Simulations, Empirical vs Half-normal Detection function, for three different layouts. Dashed line equals true value of 20 objects per km$^2$\label{fig:sim1}}
 		
 \end{figure}
 Figure \ref{fig:sim1} shows the results of 1000 simulations, each analyzed with Empirical and Half-normal detection function, $g(x)$, and using each of the three layouts, Structured, Random, and Transect. All $\hat{D}$  were done using the kernel method with a normal kernel \parencite{quang1993}.
 
 For each simulation, a single layout of ``objects'' is generated, and that map is analyzed by each of the 6 combinations of VCP layout and $g(x)$. 
 
-As we would expect, the density estimates using $g(x)$ based on the Empirical distance observations is biased low. We also see bias in the estimates using the half-normal function for $g(x)$, but it is much less severe than in the Empirical data.
+As we would expect, the density estimates using $g(x)$ based on the Empirical distance observations is biased low. We also see bias in the estimates using the half-normal function for $g(x)$, but it is much less severe than in the Empirical data. \textcite{quang1993} does provide a bias-correction method, but it was not used for this simulation.
 
-Addressing our primary question of interest, does the overlap of the VCP affect the population density estimate due to violation of independence, the answer would appear to be no. Looking at the simulations with the Half-normal detection function, the histograms are fairly similar for the three layouts. 
+Addressing our primary question of interest, does the overlap of the VCP affect the population density estimate due to violation of independence, the answer would appear to be no. Looking at the simulations with the Half-normal detection function, the histograms are fairly similar across the three layouts. 
 
-\begin{table}
-	\caption{Empirical vs. Half-normal detection function, across all three layouts. 1000 simulations.}
+Table~\ref{table:sim1} supports what we observe in the histogram: the means vary between our two $g(r)$ options, but are approximately the same within the each option, regardless of which VCP layout we have chosen. 
+\begin{table}[h]
+	\caption{Empirical vs. Half-normal detection function, across all three layouts. 1000 simulations. True density 20/km$^2$}
 	\begin{tabular}{ r r r r r r r r r}
 	   $g(x)$	 & Layout		& Mean	& Std Dev	& LB 95 & UB 95	& 25th	& Median	&  75th \\ \hline \hline
 	   Empirical & Random		& 14.52 & 3.35 		& 7.97	& 21.08	& 12.17	& 14.46	& 16.74\\
@@ -245,9 +234,9 @@ Addressing our primary question of interest, does the overlap of the VCP affect 
 
 
 
-\texttt{TO DO: along with d.hat, get the variance estimate for d.hat, and return T/F if the true value was contained in the interval.}
+\texttt{TO DO: return T/F if the true value was contained in the interval. redo graph to match others.}
 
-\texttt{TO DO: look at 3 moved categories for the 3 layouts}
+
 
 \subsection{Movement or No Movement}
 \begin{figure}
@@ -256,20 +245,6 @@ Addressing our primary question of interest, does the overlap of the VCP affect 
 	\caption{1000 Simulations, Movement, Temporary Movement and Permanent Movement for three different layouts. \label{fig:sim2}}
 		
 \end{figure}
-In the Figure~\ref{fig:82dist}, the histogram of empirical observation distances, there appears to be evidence of movement away from the observer. To see if the movement would have an effect on the independence of our VCPs, depending on placement, a second simulation was run.
-
-As with the previous simulation, the same three layout types were used. Three movement classes were defined:
-\begin{enumerate}
-\item No Movement: Same as previous simulation, objects stayed at original point
-\item Temporary Movement: Objects within 100 m moved directly away from observer, with more movement if they started closer to observer. They were reset to original location before moving to next VCP
-\item Permanent Movement: As with temporary movement, only not reset before moving on to next VCP.
-\end{enumerate}
-
-Figure~\ref{fig:sim2} and Table~\ref{table:sim2} illustrate the results. As with the previous simulation, the results are visually very similar for all three layout types. All are biased low, with more bias in the simulations with movement. Unexpectedly, the type of movement, temporary or permanent, does not seem to play a large part in changing the bias. 
-
-For this simulation, the movement was simulated to happen within the first 100 m from the observer (0.1 on graph), as visually indicated by Figure~\ref{fig:82dist}. 
-
-
 \begin{table}
 	\caption{Half-normal detection function, three layouts, three movement types. 1000 simulations.}
 	\begin{tabular}{ r| r r| r r| r r|}
@@ -286,83 +261,62 @@ For this simulation, the movement was simulated to happen within the first 100 m
 	\label{table:sim2}
 \end{table}
 
-no small distances, so overestimating area surveyed compared to # ob
+Figure~\ref{fig:sim2} and Table~\ref{table:sim2} illustrate the results of our movement type simulation. For this run, only the half-normal detection function was used. 
 
-we will be low if top small, bottom large.
+Within a column, the results are fairly similar in shape and spread. We see the most obvious differences here between columns, indicating that the type of movement causes more bias in our estimate than the potential overlap of our observation areas. 
 
+Unexpectedly, the type of movement, temporary or permanent, does not seem to play a large part in changing the bias. Table~\ref{table:sim2} shows that the 95\% confidence intervals \parencite{quang1993} capture the true mean about 59\% of the time, no matter which movement type, Temporary or Compounded.
 
+The similarity for the Structured and Random layouts can be explained by a general lack of compounded movement. For the Structured layout, the animals would only move once, additional movement would not be triggered by an overlapping VCP, so the Compounded Movement setting would have the same end result as the Temporary Movement setting. For the Random VCP layout we would expect there to be a larger effect from the Compounded movement, because we will have VCPs whose observation distances overlap. 
+
+Looking at Figure~\ref{fig:random}, which is just one possible random layout, there are 8 pairs of VCP where the circles representing the 200 m mark overlap, and 3 where they overlap to any significant degree. With most of the movement happening within that first 100 m, we would expect the estimate to be fairly similar to the Structured layout setting, if this random layout is typical of those generated. 
+
+\texttt{TODO: Try to xplain the .50 jump in the estimate for transect/compounded. No theory or story atm.}
+
+%NOTE: no small distances, so overestimating area surveyed compared to \# ob
+%NOTE: we will be low if top small, bottom large.
 
 \section{The Problem with Circles}
-To test the effectiveness of my movement algorithm, I compared the detection distances from the data where the objects moved, to the detection distances from the same data, assuming they stayed still. The movement data, (left panel, Figure \#) is squashed more towards 0.1 Km than the still data (right panel). But there's a problem. The still data doesn't show the nice shoulder at 0 that the literature instructs us to expect.
+To test the effectiveness of my movement algorithm, I compared the detection distances from the data where the objects moved, to the detection distances from the same data, assuming they stayed still. The movement data, (left panel, Figure~\ref{fig:moveTest}) is squashed more towards 0.1 Km than the still data (right panel). But there's a problem. The still data doesn't show the nice shoulder at 0 that the literature instructs us to expect.
 
-\texttt{TO DO: Images}
-
-Figure \ref{fig:simDist} shows the distances from 36 randomly placed VCPs to the objects within the max observation distance. As we can see, there are simply fewer objects close to the observer, which increases as the distance moves away. (Rephrase) This is an artifact of the VCP being a circle. 
-
-\texttt{TO DO: Same graph for Line transect}
-
-\begin{figure}
+\begin{figure}[h]
 	\center
-	\includegraphics[width=0.5\textwidth]{../images/simulated_bird_distances.pdf}
-	\caption{Simulated bird distances from center point of 36 randomly placed VCPs.\label{fig:simDist}}
-		
+	\includegraphics[width=\textwidth]{../images/movementTest.pdf}
+	\caption{Simulated bird distances from center point of 36 randomly placed VCPs.\label{fig:moveTest}}
 \end{figure}
 
-With a line transect, as we move away from the line, the distance "surveyed" increases linearly. With a point transect, as we move away from the point, the distance surveyed increases exponentially. 
+The problem is because circles are different than rectangles. 
 
-\texttt{TO DO: Equations showing what happens when you compare distance at r vs distance at r+x}
+With a line transect, as we move away from the line, the distance ``surveyed" increases linearly. With a point transect, as we move away from the point, the distance surveyed increases exponentially. Figure~\ref{fig:perfectArea} shows the relationship for a rectangle and circle with the same area. 
 
+Figure~\ref{fig:perfectCount} shows the difference in the expected number of observed objects at distance $r$ given a line transect vs. a VCP. For the VCP, Area was calculated as $2*pi*r$. For the line transect, Area was calculated as $(2r)*L$, with $L=0.785$ chosen so that the area of the circle and rectangle were equal when $r=0.5$.
+
+$E[observed] = Area*Density*P(object observed | distance r)$
+
+My conclusion from this is that for a VCP survey, even if everything is perfect, you will not see the nice shouldered layout of your empirical detection distances. \textcite{ramsey1981} speaks about this somewhat, when comparing the ``CUM-D'' curve, or the plot of the cumulative number of observations at distance $r$ for both line and point transects. However, almost all the illustrations on how your collected data should look, shows data that echoes the detection probability curve, with the half-bell-shape with a nice shoulder. Since this shape is impossible, I think some better examples are in order.
+
+Better mathematicians than I have worked on distance sampling, and this is why in analyzing point transect data we take the derivative of $g(r)$, to adjust for this difference in how area is calculated. 
+
+%Thought - is this why we use h(0) for the point transects? need to verify, h(r) = f'(r)??  budkland 1987 paper has h(r) = f(r)/r, need to check teh book.  - yes.
 
 \begin{figure}
 	\centering
-	\caption{Squares (Line Transect, solid) vs. Circles (Point Transect, dashed)}
+	\caption{Rectangles (Line Transect, solid) vs. Circles (Point Transect, dashed)}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/rect-circ-area.pdf}
 		\caption{Area of rectangle vs circle at same distance from point/line}
+		\label{fig:perfectArea}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{../images/rect-circ-detection.pdf}
 		\caption{Estimated detection numbers for rectangle (solid) vs circle (dashed)}
+		\label{fig:perfectCount}
 	\end{subfigure}
-	
-
 \end{figure}
 
 
-Thought - is this why we use h(0) for the point transects? need to verify, h(r) = f'(r)??  budkland 1987 paper has h(r) = f(r)/r, need to check teh book.
-
-
-
-
-\subsection{Notation}
-This notation is borrowed from Quang (1993) following Buckland (1987)
-
-\begin{tabular}{r l}
-$t$:	&	Number of plots surveyed\\
-$D$:	& Common density of animals in all plots\\
-$m_j$:	& Number of detected animals in the $j$th plot\\
-$\bar m$:	& Average number detected per plot\\
-$\mu$:	& Expected number of animals in a plot, $\mu = E(m_j)$\\
-$n$:	& Aggregate numbe of animals detected in all plots, $n=\sum_{j=1}^t m_j$\\
-$\lambda$:	&	Expected total number of detected animals in all plots, $\lambda=E(n)=t\mu$\\
-$R_i$:	& Distance from station to the $i$th detected animal\\
-$R_1,\cdots,R_n$: & Detected distances pooled from all plots\\
-$s$:	& Sample standard deviation of $R_1,\cdots,R_n$\\
-$f(r)$: & Common probability density function (pdf) of the detected distances, $R_1,\cdots,R_n$\\
-$h$: 	& Bandwidth used in kernel estimation
-\end{tabular}\\
-
-For a typical individual plot:
-
-\begin{tabular}{r l}
-$N$:	&	True number of animals in the plot (unknown)\\
-$m$:	&	Number of detected animals in the plot\\
-$g(r)$:	&	Radial detection function, $g(r)$=Pr(Animal is detected | Animal is at distance $r$)\\
-$w$:	&	Distance beyond which no animals can be detected (= radius of the plot)\\
-$p$:	& Mean detection probability within the plot\\
-$B$:	&   $B = 2/(pw^2)$\\
-
-\end{tabular}
+\section{Conclusions}
+If all else is held equal, VCP layout does not seem to play a large role in density estimate using the kernel method as described by \textcite{quang1993}. Violations of the expected detection probability curve, or by movement of the objects away from the observer play more of a role in biasing the resulting estimate. 
 
 
 \section{Bibliography}

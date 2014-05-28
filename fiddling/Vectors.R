@@ -181,6 +181,23 @@ abline(a=.05, b=-.05/.150)
 
 # the hell? the "still" distances also have a drop close to the point
 
+Rj <- c(ddist.mov, ddist.still)
+cat <- c(rep("Move", 4598),
+         rep("Still", 4610)
+  )
+
+Movement <- data.frame(Rj, cat)
+
+ggplot(data=Movement, aes(x=Rj))+geom_histogram(aes(y=..count..), fill=OSUOrange, colour="white")+facet_grid(.~cat)+theme_bw(18)+ylab("Count of Observed")+xlab("Observation Distance 0.1=100 m")
+
+ggsave("images/movementTest.pdf", height=4, width=8)
+
+
+
+
+
+#-------------------------------------------------
+
 xy.vcp <- VCP.transectLayout()
 raw.Rj <- data.frame()
 xy.objects <- get.Coords(20)
