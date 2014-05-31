@@ -27,6 +27,13 @@ VCP.Dhat.hnormKernel <- function(m, R.i, true.D=NULL) {
 }
 
 
+#xy.objects <- get.Coords(20)
+#xy.vcp <- VCP.randomLayout()
+#params <- hn.params
+#w=0.5
+#g.type="hnorm"
+#transects=F
+#true.D = 20
 
 ## g.type can be "hnorm" or "emp"; it defaults to "hnorm" if an unrecognized value entered
 
@@ -52,15 +59,15 @@ VCP.dHat <- function(xy.objects, xy.vcp, params, w=0.5, g.type="hnorm", transect
     
     # calculate straight-line distance from observer to object, R.j
     
-    candidate.xy <- mutate(candidate.xy, x.dist = x-curr.x, y.dist=y-curr.y, R.j = sqrt(x.dist^2+y.dist^2))
+    candidate.xy <- mutate(candidate.xy, x.dist = x-curr.x, y.dist=y-curr.y, Rj = sqrt(x.dist^2+y.dist^2))
     
     # feed R.j into detection function
     detected=NULL
     if(tolower(g.type)=="emp"){
-      detected <- VCP.loessProb(candidate.xy$R.j, params)
+      detected <- VCP.loessProb(candidate.xy$Rj, params)
       #print("emp")
     } else {
-      detected <- VCP.hnormProb(candidate.xy$R.j, params)
+      detected <- VCP.hnormProb(candidate.xy$Rj, params)
       #print("hnorm")
     }
     
@@ -68,10 +75,12 @@ VCP.dHat <- function(xy.objects, xy.vcp, params, w=0.5, g.type="hnorm", transect
     
     # store list of detected R.j in data frame, with station # and transect # if applicable
     m[i] <- sum(detected)
-    R.j <- rbind(R.j, candidate.xy %.% filter(detected==1) %.% select(x, y, R.j) %.% mutate(s_id = i, t_id=xy.vcp$t_id[i]))
+    if(sum(detected) > 0){
+      R.j <- rbind(R.j, candidate.xy %.% filter(detected==1) %.% select(x, y, Rj) %.% mutate(s_id = i, t_id=xy.vcp$t_id[i]))
+    }
   }
   
-  dhat <- VCP.Dhat.hnormKernel(m, R.j$R.j, true.D)
+  dhat <- VCP.Dhat.hnormKernel(m, R.j$Rj, true.D)
   return(dhat)
 }
 
