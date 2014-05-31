@@ -31,7 +31,7 @@ xy.structured <- VCP.structuredLayout()
 D.hat.df <- data.frame()
 
 # http://ryouready.wordpress.com/2009/03/16/r-monitor-function-progress-with-a-progress-bar/
-#pb <- winProgressBar(title="progress bar", min=0, max=nsim, width=300)
+pb <- winProgressBar(title="progress bar", min=0, max=nsim, width=300)
 # didn't work on Mac for somereason >_>
 
 ## IN loop -----------------------------------------------------------------
@@ -67,13 +67,13 @@ for(i in 1:nsim){
   #D.emp.T <- VCP.dHat(x.y, xy.transect, emp.params, w=max.r, g.type="emp")
   D.S.emp <- c(VCP.dHat(x.y, xy.structured, emp.params, w=max.r, g.type="emp",
                           true.D=D.known),
-                 Layout="structured", GType="Emperical")
+                 Layout="structured", GType="Empirical")
   D.R.emp <- c(VCP.dHat(x.y, xy.random, emp.params, w=max.r, g.type="emp",
                           true.D=D.known),
-                 Layout="random", GType="Emperical")
+                 Layout="random", GType="Empirical")
   D.T.emp <- c(VCP.dHat(x.y, xy.transect, emp.params, w=max.r, g.type="emp",
                           true.D=D.known),
-                 Layout="transect", GType="Emperical")
+                 Layout="transect", GType="Empirical")
   
   ## Add to data frame --------------
   #D.pass <- cbind(D.hnorm.S, D.hnorm.R, D.hnorm.T, D.emp.S, D.emp.R, D.emp.T)
@@ -87,5 +87,5 @@ for(i in 1:nsim){
 }
 ## END Loop -----------------------------------------------------------------
 
-write.csv(D.hat.df, "data/Sim1_05-31.csv", row.names=FALSE)
+write.csv(D.hat.df, "data/Sim1_05-31_PC.csv", row.names=FALSE)
 #   already done, don't want to overwrite original simulation data.

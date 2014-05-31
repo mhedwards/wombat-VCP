@@ -215,7 +215,7 @@ Two simulations were run, one looking at the three layout options crossed with t
 \subsection{Half-normal vs. Empirical $g(r)$}
 \begin{figure}
 
-	\includegraphics[width=\textwidth]{../images/Emp_Vs_Hnorm.pdf}
+	\includegraphics[width=\textwidth]{../images/Emp_Vs_Hnorm_1-2.pdf}
 	\caption{1000 Simulations, Empirical vs Half-normal Detection function, for three different layouts. Dashed line equals true value of 20 objects per km$^2$\label{fig:sim1}}
 		
 \end{figure}
@@ -227,27 +227,35 @@ As we would expect, the density estimates using $g(x)$ based on the Empirical di
 
 Addressing our primary question of interest, does the overlap of the VCP affect the population density estimate due to violation of independence, the answer would appear to be no. Looking at the simulations with the Half-normal detection function, the histograms are fairly similar across the three layouts. 
 
-Table~\ref{table:sim1} supports what we observe in the histogram: the means vary between our two $g(r)$ options, but are approximately the same within the each option, regardless of which VCP layout we have chosen. 
-\begin{table}[h]
-	\caption{Empirical vs. Half-normal detection function, across all three layouts. 1000 simulations. True density 20/km$^2$}
-	\begin{tabular}{ r r r r r r r r r}
-	   $g(x)$	 & Layout		& Mean	& Std Dev	& LB 95 & UB 95	& 25th	& Median	&  75th \\ \hline \hline
-	   Empirical & Random		& 14.52 & 3.35 		& 7.97	& 21.08	& 12.17	& 14.46	& 16.74\\
-	   Empirical & Structured	& 14.50 & 3.22 		& 8.19 	& 20.81 & 12.38 & 14.45 & 16.62\\
-	   Empirical & Transect		& 14.46 & 3.53 		& 7.55 	& 21.37 & 11.85 & 14.36 & 16.88\\ \hline
-	 Half-normal & Random 		& 18.17 & 4.50 		& 9.34 	& 27.00 & 15.24 & 17.94 & 21.00\\
-	 Half-normal & Structured	& 17.94 & 4.29 		& 9.54 	& 26.35 & 15.19 & 17.67 & 20.78\\
-	 Half-normal & Transect		& 18.04 & 4.49 		& 9.23 	& 26.84 & 14.90 & 17.75 & 20.74\\
+Table~\ref{table:sim1} supports what we observe in the histogram: the centers vary between our two $g(r)$ options, but are approximately the same within the each option, regardless of which VCP layout we have chosen. Table~\ref{table:sim1capture} shows the percentage of simulations that captured the true object density of 20 per km$^2$ within a 95\% confidence interval. \cite{quang1993}
 
+There may be evidence of a drop in accuracy with the Transect layout, but it is difficult to determine if this is a valid observation, or an artifact of this particular simulation. The drop, if it exists, is much less severe with the half-normal detection function. With the empirical detection function, the structured layout percentage swings much higher than the result from our random layout, unlike for half-normal where they are just over 1\% apart. Repeated simulations, could help narrow down if this is a true effect, or simply random noise.
+\begin{table}[h]
+
+	\begin{tabular}{ r r |r r| r r r}
+		$g(x)$      & Layout     & Mean  & Std Dev & 25th  & Median & 75th  \\ \hline\hline
+		Empirical   & Random     & 14.47 & 3.37    & 12.08 & 14.38  & 16.73 \\
+		Empirical   & Structured & 14.49 & 3.15    & 12.27 & 14.47  & 16.59 \\
+		Empirical   & Transect   & 14.26 & 3.66    & 11.65 & 14.14  & 16.80 \\ \hline
+		Half-normal & Random     & 17.90 & 4.57    & 14.67 & 17.86  & 20.88 \\
+		Half-normal & Structured & 18.03 & 4.16    & 15.05 & 17.91  & 20.82 \\
+		Half-normal & Transect   & 17.80 & 4.64    & 14.52 & 17.44  & 20.78
 	\end{tabular}
+	\caption{Centers and Spread for Empirical vs. Half-normal detection functions. 1000 simulations. True density 20/km$^2$}
 	\label{table:sim1}
 \end{table}
+\begin{table}[h]
 
-
-
-\texttt{TO DO: return T/F if the true value was contained in the interval. redo graph to match others.}
-
-
+	\begin{tabular}{ r| r r| r r|}
+		           & \multicolumn{2}{|c|}{Empirical} & \multicolumn{2}{|c|}{Half Normal} \\ \hline\hline
+		Layout     & Mean $\hat{D}$ & \% Capture     & Mean $\hat{D}$ & \% Capture       \\ \hline\hline
+		Random     & 14.47          & 73.6\%         & 17.90          & 94.0\%           \\
+		Structured & 14.49          & 77.5\%         & 18.03          & 95.3\%           \\
+		Transect   & 14.27          & 69.6\%         & 17.80          & 91.2\%           \\ \hline
+	\end{tabular}
+	\caption{True Density Capture, Emperical vs. Half-normal detection function for three layouts. 1000 simulations.}
+	\label{table:sim1capture}
+\end{table}
 
 \subsection{Movement or No Movement}
 \begin{figure}
@@ -256,8 +264,25 @@ Table~\ref{table:sim1} supports what we observe in the histogram: the means vary
 	\caption{1000 Simulations, Movement, Temporary Movement and Permanent Movement for three different layouts. \label{fig:sim2}}
 		
 \end{figure}
+\begin{table}[h]
+
+	\begin{tabular}{ r r| r r| r r r}
+		Movement  & Layout     & Mean  & Std Dev & 25th  & Median & 75th  \\ \hline\hline
+		None      & Random     & 17.86 & 4.28    & 15.03 & 17.64  & 20.65 \\
+		None      & Structured & 18.01 & 4.51    & 14.95 & 17.62  & 20.94 \\
+		None      & Transect   & 17.90 & 4.78    & 14.74 & 17.67  & 20.95 \\ \hline
+		Permanent & Random     & 11.86 & 3.42    & 9.58  & 11.61  & 14.09 \\
+		Permanent & Structured & 11.90 & 3.65    & 9.37  & 11.67  & 14.08 \\
+		Permanent & Transect   & 12.42 & 3.72    & 9.93  & 12.17  & 14.79 \\ \hline
+		Temporary & Random     & 11.76 & 3.57    & 9.22  & 11.75  & 14.02 \\
+		Temporary & Structured & 11.74 & 3.48    & 9.37  & 11.56  & 13.85 \\
+		Temporary & Transect   & 11.75 & 3.57    & 9.24  & 11.72  & 14.20
+	\end{tabular}
+	\caption{Centers and Spread for Movement and Layout combinations. 1000 simulations. True density 20/km$^2$}
+	\label{table:sim2}
+\end{table}
 \begin{table}
-	\caption{Half-normal detection function, three layouts, three movement types. 1000 simulations.}
+
 	\begin{tabular}{ r| r r| r r| r r|}
 	
 		& \multicolumn{2}{|c|}{No Movement}	& \multicolumn{2}{|c|}{Compounded Mvmt}	& \multicolumn{2}{|c|}{Temporary Mvmt}\\ 
@@ -269,20 +294,23 @@ Table~\ref{table:sim1} supports what we observe in the histogram: the means vary
  Transect	& 17.90 			& 90.8\% 		& 12.42 & 65.0\% 	& 11.75 & 58.0\% \\ \hline
 
 	\end{tabular}
-	\label{table:sim2}
+	\caption{Mean and Capture Rate, Half-normal detection function, three layouts, three movement types. 1000 simulations.}
+	\label{table:sim2capture}
 \end{table}
 
-Figure~\ref{fig:sim2} and Table~\ref{table:sim2} illustrate the results of our movement type simulation. For this run, only the half-normal detection function was used. 
+Figure~\ref{fig:sim2} and Tables~\ref{table:sim2} and~\ref{table:sim2capture} illustrate the results of our movement type simulation. For this run, only the half-normal detection function was used. 
 
-Within a column, the results are fairly similar in shape and spread. We see the most obvious differences here between columns, indicating that the type of movement causes more bias in our estimate than the potential overlap of our observation areas. 
+For testing combinations of movement and VCP layout, only the half-normal detection function was utilized. Figure~\ref{fig:sim} compares the histograms of the nine combinations. On the whole, the estimates are biased low, as was observed in the previous simulation, without movement. Within a column, the results are fairly similar in shape and spread. The most obvious differences lie between columns, indicating that the type of movement causes more bias in our estimate than the potential overlap of our observation areas. 
 
-Unexpectedly, the type of movement, temporary or permanent, does not seem to play a large part in changing the bias. Table~\ref{table:sim2} shows that the 95\% confidence intervals \parencite{quang1993} capture the true mean about 59\% of the time, no matter which movement type, Temporary or Compounded.
+Table~\ref{table:sim2} reinforces this conclusion, as the measures of center and spread are reasonably consistent within Movement type, regardless of the VCP Layout. Differences are observed between movement types, with No Movement having the estimates with the smallest amount of downward bias, and Compounded and Temporary movement biasing the population density estimate about the same amount.
+
+Unexpectedly, the type of movement, temporary or permanent, does not seem to play a large part in changing the bias. Table~\ref{table:sim2capture} shows that the 95\% confidence intervals \parencite{quang1993} capture the true mean about 59\% of the time, no matter which movement type, Temporary or Compounded.
 
 The similarity for the Structured and Random layouts can be explained by a general lack of compounded movement. For the Structured layout, the animals would only move once, additional movement would not be triggered by an overlapping VCP, so the Compounded Movement setting would have the same end result as the Temporary Movement setting. For the Random VCP layout we would expect there to be a larger effect from the Compounded movement, because we will have VCPs whose observation distances overlap. 
 
 Looking at Figure~\ref{fig:random}, which is just one possible random layout, there are 8 pairs of VCP where the circles representing the 200 m mark overlap, and 3 where they overlap to any significant degree. With most of the movement happening within that first 100 m, we would expect the estimate to be fairly similar to the Structured layout setting, if this random layout is typical of those generated. 
 
-The combination of compounded movement and the transect layout seems to have an effect on the density estimate. The other estimates for either movement type, are all in the same ballpark, around 11.8 with around a 59\% rate for capturing the true population value. For the Transect Layout and Compounded movement, this rises 0.50 to a mean population density estimate of 12.42, and a capture percent of 65\%. It is unclear if there is something about this combination that is reducing bias (possible, but feels unlikely), or if it is instead biasing the estimate upwards, which appears like bias reduction because the estimate is already low.
+The combination of compounded movement and the transect layout seems to have an effect on the density estimate. The other estimates for either movement type, are all in the same ballpark, around 11.8 with an approximate 59\% rate for capturing the true population value. For the Transect Layout and Compounded movement, this rises 0.50 to a mean population density estimate of 12.42, and a capture percent of 65\%. It is unclear if there is something about this combination that is reducing bias (possible, but feels unlikely), or if it is instead biasing the estimate upwards, which appears like bias reduction because the estimate is already low.
 
 %\texttt{TODO: Try to xplain the .50 jump in the estimate for transect/compounded. No theory or story atm.}
 
@@ -331,6 +359,8 @@ Many researchers have worked on distance sampling, and this effect is taken into
 If all else is held equal, VCP layout does not seem to play a large role in population density estimates using the kernel method as described by \textcite{quang1993}. Violations of the expected detection probability curve, or by movement of the objects away from the observer play more of a role in biasing the resulting estimate. 
 
 All of the population density estimates were biased low using Quang's formula for $\hat{D}$. This bias was observed even when the detection function was a half-normal curve and analyzed with a normal kernel, and the VCPs were placed so that the observation area did not overlap. The bias was not severe in this case, it estimated a population density around 18 objects per km$^2$, when the true estimate was 20/km$^2$, but it is noticeable. Dr. Quang's paper does offer a bias-corrected estimate, which was not used in this simulation. 
+
+There is a possible effect of the combination of compounded movement and the transect layout. It is unclear from these results what the particular cause of the increased estimate and accuracy is. Future work might involve modification of the simulation functions to return more information, such as the count of observed animals and the observation distances to assist with understanding why this combination is producing an estimate that appears out of line with it's neighbors.
 
 
 %\section{Bibliography}

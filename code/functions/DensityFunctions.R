@@ -78,6 +78,7 @@ VCP.dHat <- function(xy.objects, xy.vcp, params, w=0.5, g.type="hnorm", transect
     if(sum(detected) > 0){
       R.j <- rbind(R.j, candidate.xy %.% filter(detected==1) %.% select(x, y, Rj) %.% mutate(s_id = i, t_id=xy.vcp$t_id[i]))
     }
+      ## had to add if statement on 5/31 because when running it on Mac, was getting instances were no objects were detected, even if several were in the .1-.2 range, and it was throwing errors.  PC had higher max observation
   }
   
   dhat <- VCP.Dhat.hnormKernel(m, R.j$Rj, true.D)
