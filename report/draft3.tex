@@ -8,6 +8,7 @@
 \usepackage[labelfont={bf},margin=1cm]{caption}
 \usepackage{subcaption}
 \usepackage{textcomp}
+\usepackage{amsmath} %larger fractions
 %\usepackage[round,authoryear]{natbib}
 \usepackage[utf8]{inputenc}
 \usepackage[backend=biber,citestyle=authoryear,bibstyle=authoryear,maxbibnames=10]{biblatex}
@@ -37,7 +38,8 @@
   \centering
   \LARGE Masters Report - Variable Circular Plots: Station Placement and the Independence Assumption\\[1em]
   \large Matt Edwards\\
-  26 May 2014\par
+ % 26 May 2014\par
+  \today\par
 \endgroup
 
 \section{Introduction}
@@ -61,7 +63,7 @@ It is preferable for the detection function, $g(r)$, to have a "shoulder" at 0, 
 
 An estimate of population density is $n$, the count of objects observed, divided by the area in which they were observed, times the probability of observing the object at that distance. \cite{buckland2001} %eq 2.12, pg 39
 
-$\hat{D}=n/(Area)*P(observing object|distance r)$
+$\hat{D}=n/(\mbox{Area})*P(\mbox{observing object}|\mbox{distance }r)$
 
 The difficulty in distance sampling comes from estimating $g(r)$. Many methods have been proposed, all with their pros and cons. This paper concentrates on the kernel method, as detailed by \textcite{quang1993}. This is a non-parametric method, using the kernel of a normal distribution to obtain a kind of ``average observation distance'' to be used in the calculation of the effective area surveyed for our population density estimate.
 
@@ -166,29 +168,27 @@ For a maximum possible observation distance of 0.500 (500 m), the parameter for 
 
 The half-normal parameter $\theta$ is related to the standard deviation of a standard normal distribution by the relationship:
 
-$\theta = \frac{\sqrt{\pi /2}}{\sigma}$
+$\theta = \dfrac{\sqrt{\pi /2}}{\sigma}$
 
 If we estimate $\sigma$ by $w/3.5$ (with $w$ being the maximum distance at which we might observe an object, and 3.5 being the standard deviation point where $P(X > 3.5) < 0.001$) then $\theta$ is:
 
-$\sigma = w/3.5 = 0.1429$
+$\sigma = \dfrac{w}{3.5} = 0.1429$
 
-$\theta = \frac{\sqrt{\pi /2}}{0.1429}=8.7732$
+$\theta = \dfrac{\sqrt{\pi /2}}{0.1429}=8.7732$
 
 For a half-normal with parameter $\theta=8.7732$, $f(0)=5.5852$ so to scale the value to 1:
 \begin{center}
-$\delta_{HN} = 1/5.5852 = 0.1790$
+$\delta_{HN} = \dfrac{1}{5.5852} = 0.1790$
 \end{center}
 
 
 Half-normal density functions were executed in R with the \texttt{fdrtool} package.
-
-\subsubsection{Empirical Observations}
 \begin{figure}
 	\includegraphics[width=\textwidth]{../images/loess.pdf}
 	\caption{Empirical Observation Distances from Original data in meters, with LOESS regression lines. Bin width=5 m\label{fig:by5}}
 \end{figure}
-
-We can see in Figure \ref{fig:by5} that above 100 m, observations were commonly heaped into 10 or 25 m distances, with the latter being more heavily used. Above 200 m, 50 m heaps were common. 
+\subsubsection{Empirical Observations}
+Figure \ref{fig:by5} illustrates that above 100 m, observations were commonly heaped into 10 or 25 m distances, with the latter being more heavily used. Above 200 m, 50 m heaps were common. 
 
 Using the \texttt{hist()} function in R, the 1982 observation distances were broken into counts by 5 m groups. Using the bin midpoints, the density estimate was multiplied by 5 to get the density value for that bin. A LOESS regression was run with the midpoint as $x$ and $y=density*5$, using the \texttt{loess()} package in R with a span of 0.2. This is the solid line in Figure~\ref{fig:by5}. 
 
@@ -196,7 +196,7 @@ This gives us an object that can be used with \texttt{predict()} to get density 
 
 Following the scaling of the highest point to 1, as was done with the half normal curve, where the highest point was $g(0)$, we also find $\delta$ for this empirical detection probability. A sequence of $x$ values was generated covering the range from 0--500 m. This was plugged into the \texttt{predict()} function using our LOESS object. The highest density value was then scaled to be 1:
 
-$\delta_{EMP}=\frac{1}{max(predicted)}=40.5780$ 
+$\delta_{EMP}=\dfrac{1}{max(predicted)}=40.5780$ 
 
 \subsubsection{Movement}
 In the Figure~\ref{fig:82dist}, the histogram of empirical observation distances, there appears to be evidence of movement away from the observer. To see if the movement would have an effect on the independence of our VCPs, depending on placement, a second simulation was run.
@@ -330,7 +330,7 @@ The problem is because circles are different than rectangles. With a line transe
 
 Figure~\ref{fig:perfectCount} shows the difference in the expected number of observed objects at distance $r$ given a line transect vs. a VCP. For the VCP, Area was calculated as $2\pi r$. For the line transect, Area was calculated as $(2r)L$, with $L=0.785$ chosen so that the area of the circle and rectangle were equal when $r=0.5$.
 
-$E[observed] = Area*Density*P(object observed | distance r)$
+$E[observed] = Area*Density*P(\mbox{object observed}|\mbox{distance }r)$
 
 The take-away point is that for a VCP survey, even if everything is perfect, the empirical detection distances will not show the nice shouldered layout of the ideal detection probability curve. \textcite{ramsey1981} speak about this, when comparing the ``CUM-D'' curve, or the plot of the cumulative number of observations at distance $r$ for both line and point transects. However, almost all the illustrations on how the collected data should look, shows data that echoes the detection probability curve: the half-bell-shape with a nice shoulder. Since this shape is impossible for VCP, explicit examples should be shown in the literature so researchers do not assume their is something wrong with their data.
 
