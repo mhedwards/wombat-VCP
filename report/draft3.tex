@@ -342,6 +342,10 @@ The take-away point is that for a VCP survey, even if everything is perfect, the
 
 Many researchers have worked on distance sampling, and this effect is taken into account in the calculation of population density estimates. When analyzing point transect data we take the derivative of $g(r)$, an adjustment which is not necessary in line transect surveys. It can be shown that this solution adjusts for the difference in how area is calculated, to result in correct density estimates. 
 
+Does this realization invalidate the original simulation? Yes and no. In order to model the true detection probability curve from the Micronesian data, we would need to transform the empirical distances from the VCP in a fashion that would make them more equitable to the empirical distances we would get from a line transect. In other words, we would need to apply a transform to change the dotted line in Figure~\ref{fig:perfectCount} to the solid line in the same figure. So, our original simulation missed the ``letter'' of the intent.
+
+However, the spirit of the intent for the first simulation was to compare a ``perfect'' detectability curve to an imperfect one, and to that end, the simulation proceeded as intended. The detectability curve based on the empirical distances violated one of the fundamental assumptions of distance sampling, that $g(0)=1$, and we were able to observe the effect of that violation in the increased bias of our estimate. Future work should absolutely consider this transformation, and an evaluation of the actual detection probability curve present in the Collared Kingfisher data. 
+
 %Thought - is this why we use h(0) for the point transects? need to verify, h(r) = f'(r)??  budkland 1987 paper has h(r) = f(r)/r, need to check teh book.  - yes.
 
 \begin{figure}
