@@ -4,6 +4,7 @@ OSURed <- rgb(192/255,49/225,26/255)
 OSUBlue1 <- rgb(93/255, 135/255, 161/255)
 OSUBlue2 <- rgb(156/255, 197/255, 202/255)
 OSUMedBrn <- rgb(176/255,96/255,16/255)
+OSUDkGray <- rgb(171/255,175/255,166/255)
 # requires dplyr
 # requires get.Coords from VCP_Utilities.R
 
@@ -27,9 +28,13 @@ for(i in 1:36) {
 
 # generate and save plot
 # you will get warnings when running these, because it is trimming out points to get to the 0,6 bounds
-ggplot()+geom_point(data=x.y, aes(x,y))+geom_point(aes(x=stat.X, y=stat.Y), color=OSUOrange, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUOrange, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
+ggplot()+geom_point(data=x.y, aes(x,y), color=OSUDkGray)+geom_point(aes(x=stat.X, y=stat.Y), color=OSUOrange, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUOrange, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
 
 ggsave("images/layout_structured.pdf", width=8, height=8)
+
+
+ggplot()+geom_point(data=x.y, aes(x,y), color=OSUDkGray)+geom_point(aes(x=stat.X, y=stat.Y), color=OSUMedBrn, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUMedBrn, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
+ggsave("images/slides-layoutS.pdf", width=8, height=8)
 
 
 ## -------------- Random VCP layout -------------- 
@@ -45,10 +50,17 @@ for(i in 1:36) {
   ell <- rbind(ell, df)
 }
 
+ggplot()+geom_point(data=x.y, aes(x,y), color=OSUDkGray)+geom_point(aes(x=stat.X, y=stat.Y), color=OSUMedBrn, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUMedBrn, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
+
+ggsave("images/slides-layoutR.pdf", width=8, height=8)
+
 # generate and save plot
 ggplot()+geom_point(data=x.y, aes(x,y))+geom_point(aes(x=stat.X, y=stat.Y), color=OSUOrange, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUOrange, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
 
 ggsave("images/layout_random.pdf", width=8, height=8)
+
+
+
 
 
 
@@ -149,6 +161,13 @@ for(i in 1:nrow(stat.df)) {
 }
 
 
+ggplot()+geom_point(data=x.y, aes(x,y), color=OSUDkGray)+geom_point(data=stat.df, aes(x=x, y=y), color=OSUMedBrn, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUMedBrn, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
+
+
+ggsave("images/slides-layoutT1.pdf", width=8, height=8)
+ggsave("images/slides-layoutT2.pdf", width=8, height=8)
+
+
 ggplot()+geom_point(data=x.y, aes(x,y))+geom_point(data=stat.df, aes(x=x, y=y), color=OSUOrange, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUOrange, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)
 
 
@@ -187,3 +206,13 @@ hnorm.p <- VCP.defineHalfnorm(.5)
 th.x=seq(0,.6,length=100)
 th.y=dhalfnorm(th.x, hnorm.p$theta)*hnorm.p$delta
 plot(x=th.x, y=th.y, type="l")
+
+
+### -----------------------------------------------------------------
+ggplot()+geom_point(data=x.y, aes(x,y), color=OSUDkGray)+coord_fixed()+theme_bw(18)+geom_rect(mapping=aes(xmin=0, xmax=6, ymin=0, ymax=6), alpha=0, color=OSUMedBrn, linetype="longdash", size=1.5)+geom_rect(mapping=aes(xmin=0.5, xmax=5.5, ymin=0.5, ymax=5.5), alpha=0, color=OSUOrange, linetype="longdash", size=1.5)
+
+ggsave("images/slides-pointGeneration.pdf", width=8, height=8)
+
+
+
+#+geom_point(data=stat.df, aes(x=x, y=y), color=OSUMedBrn, inherit.aes=FALSE)+geom_path(data=ell, aes(a,b,group=gp), colour=OSUMedBrn, size=.75)+coord_fixed(xlim=c(-0.1,6.1), ylim=c(-0.1,6.1))+theme_bw(18)

@@ -10,6 +10,7 @@ library(lubridate) # date/time manipulation
 
 raw.data <- tbl_df(read.csv("data/COKI.csv", stringsAsFactors=FALSE))
 
+
 ## ===== CODING ====
 
 Labels.Type <- c("Heard", "Seen", "", "H&S")

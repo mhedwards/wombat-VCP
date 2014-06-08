@@ -2,6 +2,11 @@
 
 %\usepackage[utf8x]{inputenc}
 \usepackage{textcomp}
+%\usepackage{graphicx}
+%\usepackage{subcaption}
+%\usepackage{floatrow}
+\usepackage{subfig}
+\usepackage{array}
 
 \definecolor{OSUdkbrn}{RGB}{104,80,64}
 \definecolor{OSUmedbrn}{RGB}{176,96,16}
@@ -17,11 +22,15 @@
 	\usetheme{CambridgeUS}
 	\setbeamercovered{transparent}
 	\setbeamertemplate{footline}[page number]{}
+	\setbeamertemplate{navigation symbols}{} % remove navigation symbols
 	\setbeamercolor{palette tertiary}{fg=white, bg=OSUdkbrn}
 	\setbeamercolor{title}{fg=OSUdkbrn}
 	\setbeamercolor{frametitle}{fg=OSUdkbrn}
 	\setbeamertemplate{itemize items}[square]
 	\setbeamercolor*{item}{fg=OSUdkbrn}
+%	
+%	\setbeameroption{show only notes} % ----------------------- NOTES TOGGLE ---------------------
+%
 }
 
 \title{Variable Circular Plots: Station Placement and the Independence Assumption}
@@ -119,6 +128,9 @@
 	}
 \end{frame}
 
+% -------------------------------- Micronesian Study --------------------------------------------------
+\section{Micronesian Study}
+
 \begin{frame}{Micronesian Forest Bird Survey: 1982}
 \begin{itemize}
 \item Engbring, Ramsey \& Wildman (1986)
@@ -140,6 +152,18 @@
 	\item Distance and species were noted, as well as foliage and other variables.
 	\end{itemize}
 	}
+\end{frame}
+
+\begin{frame}{Micronesia}
+	\begin{figure}
+		\centering
+		\includegraphics[height=.80\textheight]{../images/islands.jpg}
+	\end{figure}
+	\tiny
+	\begin{center}\color{OSUdkbrn}
+	Mariana Islands, modified from work by M. Minderhoud, (public domain) via  Wikimedia Commons
+	\end{center}
+
 \end{frame}
 
 \begin{frame}{Collared Kingfisher Observation Data}
@@ -185,17 +209,322 @@ Do overlapping observation areas violate any underlying independence assumptions
 			\begin{itemize}
 			\item Some Selected Quotes
 			\item Literature is divided
-			\item Transect layouts, similar to micronesian study, are common
+			\item Transect layouts, similar to Micronesian study, are common
 			\item We as scientists need to understand how this might bias our results.
+			\item if layout is going to bias our results, then we need to be aware of that, so adjustments can be made to survey design or analysis. 
 			\end{itemize}
 		}
 \end{frame}
 
+% -------------------------------- SIMULATION --------------------------------------------------
+\section{Simulation}
+
+\begin{frame}{Simulation Set Up}
+	Modeled after Palie Region on Rota:
+	
+	\begin{itemize}
+	\item[]
+	\item 20 birds per km$^2$
+	\item[]
+	\item 9.41 km$^2$ Study Area
+	\item[]
+	\item Two transects, 16 \& 17 stations each
+	\item[]
+	\item Truncation distance, $w$, taken to be 500 m
+	\end{itemize}
+	\note{
+	\begin{itemize}
+	\item 	Mainly because a density of 20/km$^2$ was a nice round number.
+	\item There is only 0.9 \% of data beyond 500 m
+	\item let me deal with nicer numbers, while still adhering to the spirit of the original data.
+	\end{itemize}
+
+	}
+\end{frame}
+
+\begin{frame}{Transect Layouts}
+1 unit on graph = 1000 km
+	\begin{columns}
+		\begin{column}{0.48\textwidth}
+			\includegraphics[width=\textwidth]{../images/slides-layoutT2.pdf}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\includegraphics[width=\textwidth]{../images/slides-layoutT1.pdf}
+		\end{column}
+	\end{columns}
+
+	\note{
+	\begin{itemize}
+	\item 2 transects, 18 stations each
+	\item angle randomly chosen
+	\item starting position randomly chosen
+	\end{itemize}	
+	}
+\end{frame}
+
+\begin{frame}{Structured and Random Layouts}
+1 unit on graph = 1000 km
+	\begin{columns}
+		\begin{column}{0.48\textwidth}
+			\includegraphics[width=\textwidth]{../images/slides-layoutS.pdf}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\includegraphics[width=\textwidth]{../images/slides-layoutR.pdf}
+		\end{column}
+	\end{columns}
+
+	\note{
+		\begin{itemize}
+		\item Structured layout is why we're at 6km$^2$. needed to be able to have 500 m of direction in either area, without overlap
+		\item this gave 36 stations, which was carried over to the other layout types.
+		\item For Random Method, center point of VCP was randomly placed, within the buffer zone.
+		\end{itemize}	
+	}
+\end{frame}
+
+\begin{frame}{Detection Curve: Ideal}
+	\begin{figure}
+		\centering
+		\includegraphics[height=.80\textheight]{../images/detectionCurveScaled.pdf}
+	\end{figure}
+		\note{
+			\begin{itemize}
+			\item A halfnormal curve, scaled so that $g(0.5)~0$ and $g(0)=1$
+			\item used FDRTOOL package in R.
+			\end{itemize}	
+		}
+\end{frame}
+
+\begin{frame}{Detection Curve: Empirical}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\textwidth]{../images/loess.pdf}
+	\end{figure}
+	
+		\note{
+			\begin{itemize}
+			\item data heaped into 5 m bins, midpoint of bin as x, density of bin * 5 as y
+			\item Loess regression performed with a span of 2. This is solid line.
+			\item Gives us object that can be used with predict function. Dashed line is estimate run with Predict to ensure.
+			\item As with the half-normal, the density was scaled so that the highest point gave a probability of 1.
+			\item with Predict, distances that extrapolated beyond the original dataset returned ``na'', these were set to a probability of detection of 0.
+			\end{itemize}	
+		}
+\end{frame}
+
+\begin{frame}{Movement}
+	Three Movement Options:
+	\begin{itemize}
+	\item No Movement: Objects stayed at origin point
+	\item[]
+	\item Temporary Movement: Objects would shift away from observer, but shift back to origin after observer ``left''
+	\item[]
+	\item Compounded Movement: Objects would shift away from observer, would remain at new point after observer moved. (Movement could compound if object was within movement radius for more than one VCP)
+	\end{itemize}
+	
+	\note{
+		\begin{itemize}
+		\item Based on the empirical observations, movement was simulated within the first 100 m from observer
+		\item Higher chance of movement if closer to observer
+		\item Moved further if originated closer to observer.
+		\end{itemize}	
+	}
+\end{frame}
+% -------------------------------- RESULTS --------------------------------------------------
+\section{Results}
+
+\begin{frame}{Empirical vs. Half-Normal}
+	\begin{figure}
+		\centering
+		\includegraphics[height=.80\textheight]{../images/Emp_Vs_Hnorm_1-2.pdf}
+	\end{figure}
+	\note{
+		\begin{itemize}
+		\item 1000 Simulations. Each object layout was analyzed with the 6 combinations represented in the graph
+		\item Density estimates done using the kernel method with a normal kernel \parencite{quang1993}
+		\item Estimates for Empirical detection function biased low.
+		\item Estimates using half-normal detection function biased low, but not as bad.
+		\end{itemize}	
+	}
+
+\end{frame}
+
+
+\begin{frame}{Empirical vs. Half-Normal}{Centers and Spread}
+\begin{table}
+	\begin{tabular}{ r r |r r| r r r}
+		$g(x)$      & Layout     & Mean  & Std Dev & 25th  & Median & 75th  \\ \hline\hline
+		Empirical   & Random     & 14.47 & 3.37    & 12.08 & 14.38  & 16.73 \\
+		Empirical   & Structured & 14.49 & 3.15    & 12.27 & 14.47  & 16.59 \\
+		Empirical   & Transect   & 14.26 & 3.66    & 11.65 & 14.14  & 16.80 \\ \hline
+		Half-normal & Random     & 17.90 & 4.57    & 14.67 & 17.86  & 20.88 \\
+		Half-normal & Structured & 18.03 & 4.16    & 15.05 & 17.91  & 20.82 \\
+		Half-normal & Transect   & 17.80 & 4.64    & 14.52 & 17.44  & 20.78
+	\end{tabular}
+\end{table}
+
+
+	\note{
+	\begin{itemize}
+	\item supports graphic: Centers vary between detectability options, but not much between layouts.
+	\item May be some evidence of a downward shift with the Transect Layout. Can observe in Empirical mean \& median, and Half-normal Median. 
+	\item Hard to say if this is true effect or something else.
+	\end{itemize}
+	}
+\end{frame}
+
+\begin{frame}{Empirical vs. Half-Normal}{True Density Capture}
+\begin{table}
+
+	\begin{tabular}{ r| r r| r r|}
+		           & \multicolumn{2}{|c|}{Empirical} & \multicolumn{2}{|c|}{Half Normal} \\ \hline\hline
+		Layout     & Mean $\hat{D}$ & \% Capture     & Mean $\hat{D}$ & \% Capture       \\ \hline\hline
+		Random     & 14.47          & 73.6\%         & 17.90          & 94.0\%           \\
+		Structured & 14.49          & 77.5\%         & 18.03          & 95.3\%           \\
+		Transect   & 14.27          & 69.6\%         & 17.80          & 91.2\%           \\ \hline
+	\end{tabular}
+
+\end{table}
+
+	\note{
+	\begin{itemize}
+	\item Again, Transect layout may have some downward trend, as the capture percentages are lower here
+	\item Everything is relative. We have a larger up-tick in the Empirical/Structured cell than for Half-Normal and Structured.
+	\item Repeated runs of the simulation, and higher simulation counts could help determine if this is a significant pattern.
+	\end{itemize}
+	}
+\end{frame}
+
+\begin{frame}{Movement Results}
+	\begin{figure}
+		\centering
+		\includegraphics[height=.80\textheight]{../images/MovementSim2.pdf}
+	\end{figure}
+	\note{
+		\begin{itemize}
+		\item 1000 Simulations. Again, each object layout was analyzed with the 9 combinations represented in the graph
+		\item Density estimates done using the kernel method with a normal kernel \parencite{quang1993}
+		\item Again, layout does not seem to play as large of a part as the other factor.
+		\item All were run with half-normal detectability function
+		\end{itemize}	
+	}
+\end{frame}
+
+\begin{frame}{Movement Results}{Centers \& Spread}
+	\begin{table}
+	
+		\begin{tabular}{ r r| r r| r r r}
+			Movement  & Layout     & Mean  & Std Dev & 25th  & Median & 75th  \\ \hline\hline
+			None      & Random     & 17.86 & 4.28    & 15.03 & 17.64  & 20.65 \\
+			None      & Structured & 18.01 & 4.51    & 14.95 & 17.62  & 20.94 \\
+			None      & Transect   & 17.90 & 4.78    & 14.74 & 17.67  & 20.95 \\ \hline
+			Compounded & Random     & 11.86 & 3.42    & 9.58  & 11.61  & 14.09 \\
+			Compounded & Structured & 11.90 & 3.65    & 9.37  & 11.67  & 14.08 \\
+			Compounded & Transect   & 12.42 & 3.72    & 9.93  & 12.17  & 14.79 \\ \hline
+			Temporary & Random     & 11.76 & 3.57    & 9.22  & 11.75  & 14.02 \\
+			Temporary & Structured & 11.74 & 3.48    & 9.37  & 11.56  & 13.85 \\
+			Temporary & Transect   & 11.75 & 3.57    & 9.24  & 11.72  & 14.20
+		\end{tabular}
+	
+	\end{table}
+	\note{
+	\begin{itemize}
+	\item Reinforced histograms: results consistent within movement type, regardless of layout type
+	\item No Movement is consistent with what was observed in initial simulation
+	\item 
+	\end{itemize}
+	}
+\end{frame}
+
+\begin{frame}{Movement Results}{True Density Capture}
+	\begin{table}
+	
+		\begin{tabular}{ r| c c| c c| c c|}
+		
+			& \multicolumn{2}{|c|}{No Movement}	& \multicolumn{2}{|c|}{Compounded}	& \multicolumn{2}{|c|}{Temporary}\\ 
+	 \hline \hline
+	
+	 Layout		&\footnotesize Mean $\hat{D}$	&\footnotesize \%  &\footnotesize Mean $\hat{D}$ &\footnotesize \%  &\footnotesize Mean $\hat{D}$ &\footnotesize \% 	\\ \hline \hline
+	 Random		& 17.86 			& 94.2\% 		& 11.86	& 59.6\%	& 11.76	& 59.3\% \\
+	 Structured	& 18.01 			& 94.3\% 		& 11.90 & 59.9\% 	& 11.74 & 59.5\% \\
+	 Transect	& 17.90 			& 90.8\% 		& 12.42 & 65.0\% 	& 11.75 & 58.0\% \\ \hline
+	
+		\end{tabular}
+	
+	\end{table}
+
+	\note{
+	\begin{itemize}
+	\item Movement type does not appear to play a large part in changing the bias.
+	\item We capture the true density about 59\% of the time, regardless of movement type.
+	\end{itemize}
+	}
+\end{frame}
+
+\begin{frame}{Movement And Layouts}
+	
+	\begin{columns}
+		\begin{column}{0.3\textwidth}
+			\includegraphics[width=\textwidth]{../images/slides-layoutS.pdf}
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\includegraphics[width=\textwidth]{../images/slides-layoutR.pdf}
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\includegraphics[width=\textwidth]{../images/slides-layoutT2.pdf}
+		\end{column}
+	\end{columns}
+	\vspace{1cm}
+	1 unit = 1000 km, circles represent 200 m out from station
+	\note{
+		\begin{itemize}
+		\item Makes sense for structured, if the objects are only moving within the first 100 m, they would not move twice.
+		\item For the Randomized Layout, there are only 3, in this example, where there is a significant amount of overlap. If we take this as representative of the population of layouts, we would not be seeing many layouts with a significant amount of double or triple movement. An estimate from this layout should be similar to the Structured Layout, which we see.
+		\item It's with the Transect layout where the most compounded movement occurs.
+		\item (Go Back 1 Slide) There may be an effect of the combination of The Compounded movement and the Transect layout.
+		\item not sure if this is bias reduction, or an upward bias that looks like bias reduction because we're already low.
+		\end{itemize}
+	}
+\end{frame}
 
 
 
+% -------------------------------- Lines vs. Circles --------------------------------------------------
+\section{Problem with Circles}
 
 
+% -------------------------------- CONCLUSION --------------------------------------------------
+\section{Conclusion}
+
+\begin{frame}{Conclusion}
+	If all else is held equal, VCP layout does not seem to play a large role in the bias of population density estimates using the kernel method described by \textcite{quang1993}.\par
+		\vspace{1cm}
+	Violations of the expected detection probability curve, or by movement of the objects away from the observer play a greater role in biasing the resulting estimate.
+	
+	\note{
+	\begin{itemize}
+	\item All of the estimates were biased low using Quang's formula
+	\item this was observed even with an ``ideal'' half-normal detection curve
+	\item Dr. Quang's paper does offer a bias-corrected estimate, but it was not used for this project.
+	\end{itemize}
+	}
+\end{frame}
+
+\begin{frame}{Future Work}
+	\begin{itemize}
+	\item Explore the possible interaction effect from Compounded Movement and the Transect Layout
+	\item[]
+	\item Modify simulation functions to return more information to assist diagnostics
+	\begin{itemize}
+	\item Count of Observed Objects
+	\item Observation Distances
+	\end{itemize}
+	\item[]
+	\item Modify using the Empirical data as a detectability function, to account for difference between line and point transects.
+	\item[]
+	\item Add the option to bias-correct the estimates, to see how well Quang's kernel method adjusts for these variations.
+	\end{itemize}
+\end{frame}
 
 \begin{frame}{Final Words}
 \begin{quote}
@@ -205,5 +534,53 @@ Do overlapping observation areas violate any underlying independence assumptions
 
 \end{frame}
 
+
+
+
+\begin{frame}{Questions? }
+	\begin{figure}
+		\centering
+		\includegraphics[height=.80\textheight]{../images/kingfisher.jpg}
+	\end{figure}
+	\tiny
+	\begin{center}\color{OSUdkbrn}
+	``Collared Kingfisher (Todiramphus chloris)'' by JJ Harrison, (CC-BY-SA 3.0) via  Wikimedia Commons
+	\end{center}
+
+\end{frame}
+
+\section{Additional Data}
+\begin{frame}{Object placement Simulation}
+
+	\begin{figure}
+		\centering
+		\includegraphics[height=.80\textheight]{../images/slides-pointGeneration.pdf}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Half-Normal Scaling}
+	The half-normal parameter $\theta$ is related to the standard deviation of a standard normal distribution by the relationship: 
+	\begin{center}
+	$\theta = \dfrac{\sqrt{\pi /2}}{\sigma}$
+	\end{center}
+	
+	
+	If we estimate $\sigma$ by $w/3.5$ (with $w$ being the maximum distance at which we might observe an object, and 3.5 being the standard deviation point where $P(X > 3.5) < 0.001$) then $\theta$ is:
+	\begin{center}
+	$\sigma = \dfrac{w}{3.5} = 0.1429$\\
+	\vspace{0.5cm}
+	$\theta = \dfrac{\sqrt{\pi /2}}{0.1429}=8.7732$
+	\end{center}
+\end{frame}
+
+\begin{frame}{Half-Normal Scaling}
+	For a half-normal with parameter $\theta=8.7732$, $f(0)=5.5852$ so to scale the value to 1:
+	\begin{center}
+	$\delta_{HN} = \dfrac{1}{5.5852} = 0.1790$
+	\end{center}
+	
+	
+	Half-normal density functions were executed in R with the \texttt{fdrtool} package.
+\end{frame}
 
 \end{document}
