@@ -43,7 +43,7 @@ ggplot(coki.82, aes(x=Distance))+geom_histogram(aes(fill = ..count..), binwidth=
 ggsave("images/histogram_distance5.pdf", width=8, height=4)
 
 ggplot(coki.82, aes(x=Distance))+geom_histogram(binwidth=20, fill=OSUOrange, color="white")+
-  theme_bw(18)+
+  theme_bw(18)+geom_vline(xintercept=c(150,300,450,600), color=OSUBlue2, size=2, linetype="dashed")+
   scale_x_continuous(breaks=seq(0,700,100))+xlab("Observation Distance (m)")+ylab("# of Birds")
 
 ggsave("images/histogram_dist_20m.pdf", width=8, height=4)
