@@ -39,6 +39,7 @@ OSUBlue1 <- rgb(93/255, 135/255, 161/255)
 OSUBlue2 <- rgb(156/255, 197/255, 202/255)
 OSUMedBrn <- rgb(176/255,96/255,16/255)
 OSUDkGray <- rgb(171/255,175/255,166/255)
+OSUDkBrn <- rgb(104/255,80/255,64/255)
 # requires dplyr
 # requires get.Coords from VCP_Utilities.R
 

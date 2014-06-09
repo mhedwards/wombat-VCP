@@ -6,7 +6,7 @@
 
 D <- 20
 hn.paras <- VCP.defineHalfnorm(.5)
-L <- 36*.15 # length of single transect of 36 VCP separated by .15 km
+#L <- 36*.15 # length of single transect of 36 VCP separated by .15 km
 r <- seq(0,.5, by=0.01)
 
 pi*(.5^2) #- area of circle with radius= 0.5 = 0.7853982
@@ -30,7 +30,7 @@ plot(r, A.lt)
 plot(r, A.vcp)
 
 library(ggplot2)
-ggplot()+geom_line(aes(x=r, y=A.lt), size=2)+geom_line(aes(x=r, y=A.vcp), linetype="dashed", colour="red", size=2)+theme_bw(18)+xlab("Distance from transect")+ylab("Area covered")
+ggplot()+geom_line(aes(x=r, y=A.lt), size=2, colour=OSUDkBrn)+geom_line(aes(x=r, y=A.vcp), linetype="dashed", colour=OSUOrange, size=2)+theme_bw(18)+xlab("Distance from transect")+ylab("Area covered")
 
 ggsave("images/rect-circ-area.pdf", width=6, height=6)
 
@@ -50,7 +50,7 @@ p.dpts <- VCP.dhnorm(d.pts, hn.paras)
 LT <- D * A.lt.diff[2:51]*p.dpts
 VCP <- D * A.vcp.diff[2:51] * p.dpts
 
-ggplot()+geom_line(aes(x=r[2:51], y=LT), size=2)+geom_line(aes(x=r[2:51], y=VCP), linetype="dashed", colour="red", size=2)+theme_bw(18)+xlab("Distance from transect")+ylab("E[N]")
+ggplot()+geom_line(aes(x=r[2:51], y=LT), size=2, colour=OSUDkBrn)+geom_line(aes(x=r[2:51], y=VCP), linetype="dashed", colour=OSUOrange, size=2)+theme_bw(18)+xlab("Distance from transect")+ylab("E[N]")
 
 ggsave("images/rect-circ-detection.pdf", width=6, height=6)
 
