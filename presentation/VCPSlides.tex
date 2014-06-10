@@ -35,7 +35,7 @@
 
 \title{Variable Circular Plots: Station Placement and the Independence Assumption}
 \subtitle{Master's Research Project}
-\author{Matt Edwards\\ Advisor: Claudio Fuentes}
+\author{Matt Edwards}
 \date{June 11, 2014}
 
 \begin{document}
@@ -52,9 +52,9 @@
 \section{Introduction}
 
 \begin{frame}{Distance Sampling}
+Distance sampling is a method of population density estimation that considers the probably of observing the object of interest at the distance at which it was seen.
+
 	\begin{itemize}
-	\item Population Density Estimation
-	\item[]
 	\item Used often in Ecological Sciences
 	\item[]
 	\item Began with roadside surveys in early 1900s
@@ -65,6 +65,7 @@
 \end{frame}
 
 \begin{frame}{Distance Sampling: History}
+A selection of relevant papers:
 	\begin{itemize}
 	\item Emlen---1971
 	\item Ramsey, Scott---1979, 1980 Papers
@@ -79,7 +80,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Line Vs. Point Transects}
+\begin{frame}{Line vs Point Transects}
 	\begin{itemize}
 	\item Line transects are walked
 	\begin{itemize}
@@ -94,11 +95,29 @@
 		\item Straight line distance from Observer is recorded, as projected on ground
 		\end{itemize}
 	\item[]		
-	\item Observations can be from visual sightings, auditory clues, or a combination
+	\item Both: Observations can be from visual sightings, auditory clues, or a combination
 	\end{itemize}
 \end{frame}
 
+\begin{frame}{Transect Examples}
+
+	\begin{columns}
+		\begin{column}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../images/slides-LTr.pdf}\\
+		Line Transect
+		\end{column}
+		\begin{column}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../images/slides-VCPr.pdf}\\
+		VCP/Point Transect
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
 \begin{frame}{Detection Curve: $g(r)$}
+The probability of detecting an object, give it is at distance $r$.
 	\begin{figure}
 		\centering
 		\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio=true]{../images/detectionCurve.pdf}
@@ -118,6 +137,13 @@
 	\vspace{0.5cm}
 	$\hat{D}=\dfrac{n}{\mbox{Area}*g(r)}$
 	\end{center}
+	
+	\begin{itemize}
+	\item $\hat{D}$: Estimated Population Density
+	\item $n$: number of objects observed
+	\item $Area$: The area surveyed
+	\item $g(r)$: $P(\mbox{observing object}|\mbox{distance }r)$
+	\end{itemize}
 
 	\note{
 		\begin{itemize}
@@ -167,7 +193,7 @@
 \end{frame}
 
 \begin{frame}{Collared Kingfisher Observation Data}
-
+Aggregated empirical observation distances from 1982 study.
 \begin{figure}
 	\includegraphics[width=\textwidth]{../images/histogram_dist_20m.pdf}
 	\label{fig:82dist}
@@ -189,12 +215,16 @@
 \end{frame}
 
 \begin{frame}{Research Question}
-Do overlapping observation areas violate any underlying independence assumptions?\\
-\vspace{1cm}Will it make a difference in our final population density estimates if a bird is observed from more than one station?
+\Large
+{\bfseries Do overlapping observation areas violate any underlying independence assumptions?}\\
+\vspace{1cm}
+{\bfseries Will it make a difference in our final population density estimates if a bird is observed from more than one station?}
 \end{frame}
 
 \begin{frame}{VCP Indepencence}
+	VCP Analysis assumes sightings of animals are independent events.
 	\begin{itemize}
+	\item[]
 	\item \textcite{ramsey1979,buckland1987,thompson2012} discuss assumption that VCPs are randomly placed.
 	\begin{itemize}
 	\item Implicit, but not explicit, possibility of overlap
@@ -243,6 +273,7 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Transect Layouts}
+Examples of two random Transect layouts.\\
 1 unit on graph = 1 km
 	\begin{columns}
 		\begin{column}{0.48\textwidth}
@@ -263,6 +294,7 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Structured and Random Layouts}
+Examples of Structured and Random layouts.\\
 1 unit on graph = 1 km
 	\begin{columns}
 		\begin{column}{0.48\textwidth}
@@ -283,9 +315,10 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Detection Curve: Ideal}
+``Ideal'' detection probability curve, maximum observation distance set to 0.5 unit (500 m) distance, and scaled so $g(0)=1$
 	\begin{figure}
 		\centering
-		\includegraphics[height=.80\textheight]{../images/detectionCurveScaled.pdf}
+		\includegraphics[height=.75\textheight]{../images/detectionCurveScaled.pdf}
 	\end{figure}
 		\note{
 			\begin{itemize}
@@ -296,6 +329,7 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Detection Curve: Empirical}
+Detection probability curve from empirical data, shown unscaled.
 	\begin{figure}
 		\centering
 		\includegraphics[width=\textwidth]{../images/loess.pdf}
@@ -313,6 +347,8 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Movement}
+	The histogram of observed distances shows evidence of movement, so it was considered as an option for simulation.\\
+	\vspace{0.33cm}
 	Three Movement Options:
 	\begin{itemize}
 	\item No Movement: Objects stayed at origin point
@@ -334,6 +370,8 @@ Do overlapping observation areas violate any underlying independence assumptions
 \section{Results}
 
 \begin{frame}{Empirical vs. Half-Normal}
+	\small
+	1000 simulations, comparing Empirical vs Half-Normal detection probability, no movement, 
 	\begin{figure}
 		\centering
 		\includegraphics[height=.80\textheight]{../images/Emp_Vs_Hnorm_1-2.pdf}
@@ -351,6 +389,7 @@ Do overlapping observation areas violate any underlying independence assumptions
 
 
 \begin{frame}{Empirical vs. Half-Normal}{Centers and Spread}
+
 \begin{table}
 	\begin{tabular}{ r r |r r| r r r}
 		$g(x)$      & Layout     & Mean  & Std Dev & 25th  & Median & 75th  \\ \hline\hline
@@ -362,7 +401,8 @@ Do overlapping observation areas violate any underlying independence assumptions
 		Half-normal & Transect   & 17.80 & 4.64    & 14.52 & 17.44  & 20.78
 	\end{tabular}
 \end{table}
-
+\small
+Comparing measures of centers and spread, 1000 simulations, no movement.
 
 	\note{
 	\begin{itemize}
@@ -386,6 +426,9 @@ Do overlapping observation areas violate any underlying independence assumptions
 
 \end{table}
 
+\small
+Comparing rates of capture for true object density, 1000 simulations, no movement.
+
 	\note{
 	\begin{itemize}
 	\item Again, Transect layout may have some downward trend, as the capture percentages are lower here
@@ -396,6 +439,8 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Movement Results}
+\small
+	1000 simulations, comparing effect of movement types. Half-normal detection probability used for all.
 	\begin{figure}
 		\centering
 		\includegraphics[height=.80\textheight]{../images/MovementSim2.pdf}
@@ -411,6 +456,7 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Movement Results}{Centers \& Spread}
+
 	\begin{table}
 	
 		\begin{tabular}{ r r| r r| r r r}
@@ -425,7 +471,8 @@ Do overlapping observation areas violate any underlying independence assumptions
 			Temporary & Structured & 11.74 & 3.48    & 9.37  & 11.56  & 13.85 \\
 			Temporary & Transect   & 11.75 & 3.57    & 9.24  & 11.72  & 14.20
 		\end{tabular}
-	
+	\small
+	Comparing measures of center and spread for different movement types. 1000 simulations, half-normal detection probability used for all.
 	\end{table}
 	\note{
 	\begin{itemize}
@@ -437,6 +484,7 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Movement Results}{True Density Capture}
+
 	\begin{table}
 	
 		\begin{tabular}{ r| c c| c c| c c|}
@@ -452,7 +500,8 @@ Do overlapping observation areas violate any underlying independence assumptions
 		\end{tabular}
 	
 	\end{table}
-
+	\small
+	Comparing capture of true object density for different movement types. 1000 simulations, half-normal detection probability used for all.
 	\note{
 	\begin{itemize}
 	\item Movement type does not appear to play a large part in changing the bias.
@@ -493,6 +542,7 @@ Do overlapping observation areas violate any underlying independence assumptions
 \section{Problems}
 
 \begin{frame}{Movement Testing}
+Results of movement code test (left) vs no movement ``baseline'' (right).
 	\begin{figure}
 		\centering
 		\includegraphics[width=\textwidth]{../images/movementTest.pdf}
@@ -500,7 +550,7 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Change in Area}
-
+	Area increase from 1 unit expansion in Line Transect does not equal the area from the same increase in a VCP.
 	\begin{columns}
 		\begin{column}{0.48\textwidth}
 		\includegraphics[width=\textwidth]{../images/slides-LTr.pdf}
@@ -515,10 +565,16 @@ Do overlapping observation areas violate any underlying independence assumptions
 \begin{frame}{Circles vs. Rectangles}{Area and Expected Observation Counts}
 	\begin{columns}
 		\begin{column}{0.48\textwidth}
-		\includegraphics[width=\textwidth]{../images/rect-circ-area.pdf}
+		\centering
+		\includegraphics[width=\textwidth]{../images/rect-circ-area.pdf}\\
+		\small
+		Increase in Area
 		\end{column}
 		\begin{column}{0.48\textwidth}
-		\includegraphics[width=\textwidth]{../images/rect-circ-detection.pdf}
+		\centering
+		\includegraphics[width=\textwidth]{../images/rect-circ-detection.pdf}\\
+		\small
+		Expected number of observations, given distance.
 		\end{column}
 	\end{columns}
 	\begin{center}
@@ -532,9 +588,14 @@ Do overlapping observation areas violate any underlying independence assumptions
 \section{Conclusion}
 
 \begin{frame}{Conclusion}
-	If all else is held equal, VCP layout does not seem to play a large role in the bias of population density estimates using the kernel method described by \textcite{quang1993}.\par
-		\vspace{1cm}
-	Violations of the expected detection probability curve, or by movement of the objects away from the observer play a greater role in biasing the resulting estimate.
+There are two primary conclusions:\\
+\vspace{0.5cm}
+	\begin{itemize}
+	\item If all else is held equal, VCP layout does not seem to play a large role in the bias of population density estimates using the kernel method described by \textcite{quang1993}.
+	\item[]
+	\item Violations of the expected detection probability curve, or by movement of the objects away from the observer play a greater role in biasing the resulting estimate.
+	\end{itemize}
+
 	
 	\note{
 	\begin{itemize}
@@ -546,6 +607,8 @@ Do overlapping observation areas violate any underlying independence assumptions
 \end{frame}
 
 \begin{frame}{Future Work}
+Some possible areas for future research:
+
 	\begin{itemize}
 	\item Explore the possible interaction effect from Compounded Movement and the Transect Layout
 	\item[]
@@ -556,17 +619,33 @@ Do overlapping observation areas violate any underlying independence assumptions
 	\end{itemize}
 	\item[]
 	\item Modify using the Empirical data as a detectability function, to account for difference between line and point transects.
-	\item[]
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Future Work}
+	\begin{itemize}
 	\item Add the option to bias-correct the estimates, to see how well Quang's kernel method adjusts for these variations.
+	\item[]
+	\item Address analyzing transects as clusters, since observations on a transect are likely to be related.
+
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Final Words}
-\begin{quote}
-``All models are wrong, but some are useful.'' --George E. P. Box
-\end{quote}
+	\begin{quote}
+	``All models are wrong, but some are useful.'' --George E. P. Box
+	\end{quote}
+\end{frame}
 
-
+	\begin{frame}{Acknowledgements}
+	Micronesian Survey Data courtesy of Fred Ramsey\\
+	\vspace{1cm}
+	Masters Committee:
+	\begin{itemize}
+	\item[] Claudio Fuentes, Advisor
+	\item[] Alix Gitelman, Committee Member
+	\item[] Charlotte Wickham, Committee Member
+	\end{itemize}
 \end{frame}
 
 
@@ -584,38 +663,6 @@ Do overlapping observation areas violate any underlying independence assumptions
 
 \end{frame}
 
-\section{Additional Data}
-\begin{frame}{Object placement Simulation}
 
-	\begin{figure}
-		\centering
-		\includegraphics[height=.80\textheight]{../images/slides-pointGeneration.pdf}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{Half-Normal Scaling}
-	The half-normal parameter $\theta$ is related to the standard deviation of a standard normal distribution by the relationship: 
-	\begin{center}
-	$\theta = \dfrac{\sqrt{\pi /2}}{\sigma}$
-	\end{center}
-	
-	
-	If we estimate $\sigma$ by $w/3.5$ (with $w$ being the maximum distance at which we might observe an object, and 3.5 being the standard deviation point where $P(X > 3.5) < 0.001$) then $\theta$ is:
-	\begin{center}
-	$\sigma = \dfrac{w}{3.5} = 0.1429$\\
-	\vspace{0.5cm}
-	$\theta = \dfrac{\sqrt{\pi /2}}{0.1429}=8.7732$
-	\end{center}
-\end{frame}
-
-\begin{frame}{Half-Normal Scaling}
-	For a half-normal with parameter $\theta=8.7732$, $f(0)=5.5852$ so to scale the value to 1:
-	\begin{center}
-	$\delta_{HN} = \dfrac{1}{5.5852} = 0.1790$
-	\end{center}
-	
-	
-	Half-normal density functions were executed in R with the \texttt{fdrtool} package.
-\end{frame}
 
 \end{document}
